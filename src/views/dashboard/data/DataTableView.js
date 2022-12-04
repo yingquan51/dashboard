@@ -17,10 +17,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import SoftSelect from "components/SoftSelect";
 import SoftInput from "components/SoftInput";
-import SoftPagination from "components/SoftPagination";
 import DataTableHeadCell from "examples/Tables/DataTable/DataTableHeadCell";
 import DataTableBodyCell from "examples/Tables/DataTable/DataTableBodyCell";
-
+import Pagination from '@mui/material/Pagination';
 
 // Data
 import dataTableData from "./dataTableData";
@@ -30,15 +29,26 @@ function DataTableView() {
   const columns = useMemo(() => dataTableData.columns, [dataTableData]);
   const data = useMemo(() => dataTableData.rows, [dataTableData]);
 
-  const totalEntries = 1000;
+  // 分页相关
+  const [curPage, setCurPage] = useState(1);
+  const [PageSize, setPageSize] = useState(10);
+
+  const totalEntries  = 100;
+  const entriesStart  = (curPage - 1) * PageSize + 1;
+  const entriesEnd = (curPage) * PageSize > totalEntries ? totalEntries : (curPage) * PageSize;
+  
+  const handleChange = (event, value) => {
+    console.log('goto:', value)
+    setCurPage(value);
+  };
+
+
   const entriesPerPage = { defaultValue: 10, entries: [5, 10, 15, 20, 25] };
-  const canSearch =  false;
-  const showTotalEntries = true;
-  const pagination = { variant: "gradient", color: "info" };
   const isSorted =  true;
   const noEndBorder =  false;
+
   const tableInstance = useTable(
-    { columns, data, initialState: { pageIndex: 0 } },
+    { columns, data, initialState: { pageIndex: 0, pageSize:PageSize} },
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -51,45 +61,25 @@ function DataTableView() {
     prepareRow,
     rows,
     page,
-    pageOptions,
-    canPreviousPage,
-    canNextPage,
-    nextPage,
-    previousPage,
-    setPageSize,
     setGlobalFilter,
-    state: { pageIndex, pageSize, globalFilter },
+    state: { globalFilter},
   } = tableInstance;
-  useEffect(() => setPageSize(entriesPerPage.defaultValue || 10), [entriesPerPage.defaultValue]);
+
+
   const setEntriesPerPage = ({ value }) => {
-    setPageSize(value);
     console.log('set per page :', value);
+    setPageSize(value);
   }
 
-  const gotoPage = (value) =>{
-    console.log("goto:", value);
-  }
-  const renderPagination = pageOptions.map((option) => (
-    <SoftPagination
-      item
-      key={option}
-      onClick={() => gotoPage(Number(option))}
-      active={pageIndex === option}
-    >
-      {option + 1}
-    </SoftPagination>
-  ));
-  const handleInputPagination = ({ target: { value } }) =>
-    value > pageOptions.length || value < 0 ? gotoPage(0) : gotoPage(Number(value));
-  const customizedPageOptions = pageOptions.map((option) => option + 1);
-  const handleInputPaginationValue = ({ target: value }) => gotoPage(Number(value.value - 1));
+  //  local search
   const [search, setSearch] = useState(globalFilter);
   const onSearchChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
   }, 100);
+
+  // sort
   const setSortedValue = (column) => {
     let sortedValue;
-
     if (isSorted && column.isSorted) {
       sortedValue = column.isSortedDesc ? "desc" : "asce";
     } else if (isSorted) {
@@ -97,19 +87,10 @@ function DataTableView() {
     } else {
       sortedValue = false;
     }
-
     return sortedValue;
   };
-  const entriesStart = pageIndex === 0 ? pageIndex + 1 : pageIndex * pageSize + 1;
-  let entriesEnd;
 
-  if (pageIndex === 0) {
-    entriesEnd = pageSize;
-  } else if (pageIndex === pageOptions.length - 1) {
-    entriesEnd = rows.length;
-  } else {
-    entriesEnd = pageSize * (pageIndex + 1);
-  }
+
   const [menu, setMenu] = useState(null);
   const openMenu = (event) => setMenu(event.currentTarget);
   const closeMenu = () => setMenu(null);
@@ -158,10 +139,8 @@ function DataTableView() {
         </SoftBox>
         <Card>
         <TableContainer sx={{ boxShadow: "none" }}>
-      {entriesPerPage || canSearch ? (
         <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-          {entriesPerPage && (
-            <SoftBox display="flex" alignItems="center">
+            { <SoftBox display="flex" alignItems="center">
               <SoftSelect
                 defaultValue={{ value: entriesPerPage.defaultValue, label: entriesPerPage.defaultValue }}
                 options={entriesPerPage.entries.map((entry) => ({ value: entry, label: entry }))}
@@ -171,9 +150,7 @@ function DataTableView() {
               <SoftTypography variant="caption" color="secondary">
                 &nbsp;&nbsp;entries per page
               </SoftTypography>
-            </SoftBox>
-          )}
-          {canSearch && (
+            </SoftBox>}
             <SoftBox width="12rem" ml="auto">
               <SoftInput
                 placeholder="Search..."
@@ -184,9 +161,9 @@ function DataTableView() {
                 }}
               />
             </SoftBox>
-          )}
         </SoftBox>
-      ) : null}
+
+
       <Table {...getTableProps()}>
         <SoftBox component="thead">
           {headerGroups.map((headerGroup, key) => (
@@ -226,49 +203,20 @@ function DataTableView() {
         </TableBody>
       </Table>
 
-      <SoftBox
+      { <SoftBox
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
         alignItems={{ xs: "flex-start", sm: "center" }}
-        p={!showTotalEntries && pageOptions.length === 1 ? 0 : 3}
+        p={3}
       >
-        {showTotalEntries && (
           <SoftBox mb={{ xs: 3, sm: 0 }}>
             <SoftTypography variant="button" color="secondary" fontWeight="regular">
               Showing {entriesStart} to {entriesEnd} of {totalEntries} entries
             </SoftTypography>
           </SoftBox>
-        )}
-        {pageOptions.length > 1 && (
-          <SoftPagination
-            variant={pagination.variant ? pagination.variant : "gradient"}
-            color={pagination.color ? pagination.color : "info"}
-          >
-            {canPreviousPage && (
-              <SoftPagination item onClick={() => previousPage()}>
-                <Icon sx={{ fontWeight: "bold" }}>chevron_left</Icon>
-              </SoftPagination>
-            )}
-            {renderPagination.length > 6 ? (
-              <SoftBox width="5rem" mx={1}>
-                <SoftInput
-                  inputProps={{ type: "number", min: 1, max: customizedPageOptions.length }}
-                  value={customizedPageOptions[pageIndex]}
-                  onChange={(handleInputPagination, handleInputPaginationValue)}
-                />
-              </SoftBox>
-            ) : (
-              renderPagination
-            )}
-            {canNextPage && (
-              <SoftPagination item onClick={() => nextPage()}>
-                <Icon sx={{ fontWeight: "bold" }}>chevron_right</Icon>
-              </SoftPagination>
-            )}
-          </SoftPagination>
-        )}
-      </SoftBox>
+          <Pagination  count={100}  color="secondary" circular="true" page={curPage} onChange={handleChange} />
+      </SoftBox>}
     </TableContainer>
         </Card>
       </SoftBox>

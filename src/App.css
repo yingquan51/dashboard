@@ -1,0 +1,2 @@
+body::-webkit-scrollbar{width:2px;height:2px;background:#ccc; border-radius:10px;}
+body::-webkit-scrollbar-thumb{display:block; width:2px; margin:0 auto; border-radius: 10px; background:rgb(133, 162, 206);}

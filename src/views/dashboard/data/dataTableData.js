@@ -1,24 +1,9 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v4.0.0
-=========================================================
-
-* Product Page: https://material-ui.com/store/items/soft-ui-pro-dashboard/
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 /* eslint-disable react/prop-types */
 // ProductsList page components
-import IdCell from "layouts/ecommerce/orders/order-list/components/IdCell";
-import DefaultCell from "layouts/ecommerce/orders/order-list/components/DefaultCell";
-import StatusCell from "layouts/ecommerce/orders/order-list/components/StatusCell";
-import CustomerCell from "layouts/ecommerce/orders/order-list/components/CustomerCell";
+import IdCell from "./components/IdCell";
+import DefaultCell from "./components/DefaultCell";
+import StatusCell from "./components/StatusCell";
+import CustomerCell from "./components/CustomerCell";
 
 // Images
 import team1 from "assets/images/team-1.jpg";
@@ -30,7 +15,7 @@ import ivana from "assets/images/ivana-squares.jpg";
 
 const dataTableData = {
   columns: [
-    { Header: "id", accessor: "id", Cell: ({ value }) => <IdCell id={value} /> },
+    { Header: "id", accessor: "id", Cell: ({ value }) => <IdCell id={value} clickFunc={()=>{console.log(value)}}/> },
     {
       Header: "date",
       accessor: "date",
@@ -74,8 +59,7 @@ const dataTableData = {
         );
       },
     },
-    { Header: "revenue", accessor: "revenue", Cell: ({ value }) => <DefaultCell value={value} /> },
-    { Header: "detail", accessor: "detail", Cell: ({ value }) => <StatusCell icon="close" color="error" status="Canceled" /> },
+    { Header: "revenue", accessor: "revenue", Cell: ({ value }) => <DefaultCell value={value} /> }
   ],
 
   rows: [
