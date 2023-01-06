@@ -16,6 +16,7 @@ import SoftButton from "components/SoftButton";
 // Authentication layout components
 import BasicLayout from "./BasicLayout";
 import Swal from "sweetalert2";
+import axios from "axios";
 // Images
 import curved9 from "assets/images/curved-images/curved9.jpg";
 import { useNavigate } from 'react-router-dom';
@@ -29,15 +30,26 @@ function Basic() {
 
   const handleSignin = async () => {
     //console.log(userName, passWord);
-    if(userName == "nkul"){
-        await Swal.fire("", "Login Success", "success");
-        localStorage.setItem("token","nkul");
+    axios.defaults.baseURL = "http://127.0.0.1:5000"
+    axios({
+      method: "GET",
+      url: "/api/login",
+      params: {
+        "admin": userName,
+        "password": passWord
+      }
+    }).then(response=>{
+      // console.log(response.data)
+      if (response.data.status && response.data.status == "正常") {
+        Swal.fire("", "Login Success", "success");  // "await" not allowed
+        localStorage.setItem("token", response.data.token);
         navigate("/home");
         window.location.reload()
-        
-    }else{
+      }
+      else{
         Swal.fire("", "No such User or Wrong passWord", "warning");
-    }
+      }
+    })
   }
 
   return (
