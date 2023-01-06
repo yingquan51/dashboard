@@ -2,6 +2,7 @@ import React from "react";
 import {Route, Routes } from "react-router-dom";
 import Dashboard from "../views/dashboard/Dashboard";
 import Login from "../views/login/Login";
+import Register from "../views/login/Register"
 import Home from "../views/dashboard/home/Home";
 import User from "../views/dashboard/user/User";
 import Error from "../views/other/Error"
@@ -12,6 +13,7 @@ export default function IndexRouter(){
     return (
         <Routes>
             <Route path="/login" element = {<Login/>} />
+            <Route path="/register" element = {<Register/>} />
             <Route path="/" element = {isLogin}>
                 <Route path="" element = {<Home/>} />
                 <Route path="home" element = {<Home/>} />

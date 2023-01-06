@@ -23,38 +23,34 @@ import { useNavigate } from 'react-router-dom';
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [name, setName] = useState("");
   const [admin, setAdmin] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const handleSignIn = async () => {
-    //console.log(admin, password);
+  const handleSignUp = async () => {
     axios.defaults.baseURL = "http://127.0.0.1:5000"
     axios({
-      method: "GET",
-      url: "/api/login",
+      method: "POST",
+      url: "/api/info/add",
       params: {
+        "name": name,
         "admin": admin,
-        "password": password
+        "password": password,
+        "status": "正常"
       }
     }).then(response=>{
-      // console.log(response.data)
-      if (response.data.status && response.data.status === "正常") {
-        Swal.fire("", "Sign In Success", "success");  // "await" not allowed
-        localStorage.setItem("token", response.data.token);
-        navigate("/home");
+      console.log(response.data)
+      if (response.data.status && response.data.status === 1) {
+        Swal.fire("", "Sign Up Success", "success");  // "await" not allowed
+        navigate("/login");
         window.location.reload()
       }
       else{
-        Swal.fire("", "No such User or Wrong password", "warning");
+        Swal.fire("", "Sign Up Fail", "warning");
       }
     })
-  }
-
-  const handleSignUp = () => {
-    navigate("/register");
-    window.location.reload()
   }
 
   return (
@@ -66,13 +62,16 @@ function Basic() {
       <Card>
         <SoftBox p={3} mb={1} textAlign="center">
           <SoftTypography variant="h5" fontWeight="medium">
-            Sign in
+            Sign up
           </SoftTypography>
         </SoftBox>
         <SoftBox mb={2}>
         </SoftBox>
         <SoftBox p={3}>
           <SoftBox component="form" role="form">
+            <SoftBox mb={2}>
+              <SoftInput type="text" placeholder="Name" value={name} onChange={(e)=>{setName(e.target.value)}}/>
+            </SoftBox>
             <SoftBox mb={2}>
               <SoftInput type="text" placeholder="Account ID" value={admin} onChange={(e)=>{setAdmin(e.target.value)}}/>
             </SoftBox>
@@ -91,19 +90,7 @@ function Basic() {
               </SoftTypography>
             </SoftBox>
             <SoftBox mt={4} mb={1}>
-              <SoftButton variant="gradient" color="info" fullWidth onClick={handleSignIn}>
-                sign in
-              </SoftButton>
-            </SoftBox>
-            <SoftBox mt={1} mb={3}>
-              <SoftButton
-                component={Link}
-                to="/register"
-                variant="gradient"
-                color="dark"
-                fullWidth
-                onClick={handleSignUp}
-              >
+              <SoftButton variant="gradient" color="info" fullWidth onClick={handleSignUp}>
                 sign up
               </SoftButton>
             </SoftBox>
