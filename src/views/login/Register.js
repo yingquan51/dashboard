@@ -30,7 +30,7 @@ function Basic() {
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   const handleSignUp = async () => {
-    axios.defaults.baseURL = "http://127.0.0.1:5000"
+    axios.defaults.baseURL = "http://127.0.0.1:5000";
     axios({
       method: "POST",
       url: "/api/info/add",
@@ -43,16 +43,16 @@ function Basic() {
     }).then(response=>{
       console.log(response.data)
       if (response.data.status && response.data.status === 1) {
-        Swal.fire("", "Sign Up Success", "success");  // "await" not allowed
+        Swal.fire("Sign Up Success", "", "success");  // "await" not allowed
         if (rememberMe) {
           localStorage.setItem("admin", admin);
           localStorage.setItem("password", password);
         }
         navigate("/login");
-        window.location.reload()
+        window.location.reload();
       }
       else{
-        Swal.fire("", "Sign Up Fail", "warning");
+        Swal.fire("Sign Up Fail", "This Account ID Has Been Used", "warning");
       }
     })
   }

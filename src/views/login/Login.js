@@ -30,7 +30,7 @@ function Basic() {
 
   const handleSignIn = async () => {
     //console.log(admin, password);
-    axios.defaults.baseURL = "http://127.0.0.1:5000"
+    axios.defaults.baseURL = "http://127.0.0.1:5000";
     axios({
       method: "GET",
       url: "/api/login",
@@ -41,17 +41,17 @@ function Basic() {
     }).then(response=>{
       // console.log(response.data)
       if (response.data.status && response.data.status === "正常") {
-        Swal.fire("", "Sign In Success", "success");  // "await" not allowed
+        Swal.fire("Sign In Success", "", "success");  // "await" not allowed
         localStorage.setItem("token", response.data.token);
         if (rememberMe) {
           localStorage.setItem("admin", admin);
           localStorage.setItem("password", password);
         }
         navigate("/home");
-        window.location.reload()
+        window.location.reload();
       }
       else{
-        Swal.fire("", "No such User or Wrong password", "warning");
+        Swal.fire("Sign In Fail", "No such User or Wrong password", "warning");
       }
     })
   }

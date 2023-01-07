@@ -19,39 +19,57 @@ import SoftSelect from "components/SoftSelect";
 import SoftInput from "components/SoftInput";
 import DataTableHeadCell from "examples/Tables/DataTable/DataTableHeadCell";
 import DataTableBodyCell from "examples/Tables/DataTable/DataTableBodyCell";
-import Pagination from '@mui/material/Pagination';
+import Pagination from "@mui/material/Pagination";
 
 // Data
-import dataTableData from "./dataTableData";
+import columns from "./columns";
+import axios from "axios";
 
 function DataTableView() {
-
-  const columns = useMemo(() => dataTableData.columns, [dataTableData]);
-  const data = useMemo(() => dataTableData.rows, [dataTableData]);
+  // const data = useMemo(() => dataTableData.rows, [dataTableData]);
 
   // 分页相关
   const [curPage, setCurPage] = useState(1);
-  const [PageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(9);
+  const [data, setData] = useState([]);
+  const [totalEntries, setTotalEntries] = useState(100);
+  const [pageNums, setPageNums] = useState(10);
+  const entriesStart = (curPage - 1) * pageSize + 1;
+  const entriesEnd = (curPage) * pageSize > totalEntries ? totalEntries : (curPage) * pageSize;
 
-  const totalEntries  = 100;
-  const entriesStart  = (curPage - 1) * PageSize + 1;
-  const entriesEnd = (curPage) * PageSize > totalEntries ? totalEntries : (curPage) * PageSize;
-  
   const handleChange = (event, value) => {
-    console.log('goto:', value)
+    console.log("goto:", value);
     setCurPage(value);
   };
 
 
   const entriesPerPage = { defaultValue: 10, entries: [5, 10, 15, 20, 25] };
-  const isSorted =  true;
-  const noEndBorder =  false;
+  const isSorted = true;
+  const noEndBorder = false;
+
+  useEffect(() => {
+    //console.log(admin, password);
+    axios.defaults.baseURL = "http://127.0.0.1:5000";
+    axios({
+      method: "GET",
+      url: "/api/info/get",
+      headers: {
+        "x-session-token": localStorage.getItem("token")
+      }
+    }).then(response=>{
+      console.log(response)
+      const {data, total} = response.data
+      setData(data);
+      setTotalEntries(total);
+      setPageNums(Math.ceil(total / pageSize));
+    })
+  }, [])
 
   const tableInstance = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize:PageSize} },
+    { columns, data, initialState: { pageIndex: 0, pageSize: pageSize } },
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
 
   const {
@@ -62,14 +80,14 @@ function DataTableView() {
     rows,
     page,
     setGlobalFilter,
-    state: { globalFilter},
+    state: { globalFilter },
   } = tableInstance;
 
 
   const setEntriesPerPage = ({ value }) => {
-    console.log('set per page :', value);
+    console.log("set per page :", value);
     setPageSize(value);
-  }
+  };
 
   //  local search
   const [search, setSearch] = useState(globalFilter);
@@ -138,86 +156,86 @@ function DataTableView() {
           </SoftBox>
         </SoftBox>
         <Card>
-        <TableContainer sx={{ boxShadow: "none" }}>
-        <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-            { <SoftBox display="flex" alignItems="center">
-              <SoftSelect
-                defaultValue={{ value: entriesPerPage.defaultValue, label: entriesPerPage.defaultValue }}
-                options={entriesPerPage.entries.map((entry) => ({ value: entry, label: entry }))}
-                onChange={setEntriesPerPage}
-                size="small"
-              />
-              <SoftTypography variant="caption" color="secondary">
-                &nbsp;&nbsp;entries per page
-              </SoftTypography>
-            </SoftBox>}
-            <SoftBox width="12rem" ml="auto">
-              <SoftInput
-                placeholder="Search..."
-                value={search}
-                onChange={({ currentTarget }) => {
-                  setSearch(search);
-                  onSearchChange(currentTarget.value);
-                }}
-              />
+          <TableContainer sx={{ boxShadow: "none" }}>
+            <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+              {<SoftBox display="flex" alignItems="center">
+                <SoftSelect
+                  defaultValue={{ value: entriesPerPage.defaultValue, label: entriesPerPage.defaultValue }}
+                  options={entriesPerPage.entries.map((entry) => ({ value: entry, label: entry }))}
+                  onChange={setEntriesPerPage}
+                  size="small"
+                />
+                <SoftTypography variant="caption" color="secondary">
+                  &nbsp;&nbsp;entries per page
+                </SoftTypography>
+              </SoftBox>}
+              <SoftBox width="12rem" ml="auto">
+                <SoftInput
+                  placeholder="Search..."
+                  value={search}
+                  onChange={({ currentTarget }) => {
+                    setSearch(search);
+                    onSearchChange(currentTarget.value);
+                  }}
+                />
+              </SoftBox>
             </SoftBox>
-        </SoftBox>
 
 
-      <Table {...getTableProps()}>
-        <SoftBox component="thead">
-          {headerGroups.map((headerGroup, key) => (
-            <TableRow key={key} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, key) => (
-                <DataTableHeadCell
-                  key={key}
-                  {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
-                  width={column.width ? column.width : "auto"}
-                  align={column.align ? column.align : "left"}
-                  sorted={setSortedValue(column)}
-                >
-                  {column.render("Header")}
-                </DataTableHeadCell>
-              ))}
-            </TableRow>
-          ))}
-        </SoftBox>
-        <TableBody {...getTableBodyProps()}>
-          {page.map((row, key) => {
-            prepareRow(row);
-            return (
-              <TableRow key={key} {...row.getRowProps()}>
-                {row.cells.map((cell, key) => (
-                  <DataTableBodyCell
-                    key={key}
-                    noBorder={noEndBorder && rows.length - 1 === key}
-                    align={cell.column.align ? cell.column.align : "left"}
-                    {...cell.getCellProps()}
-                  >
-                    {cell.render("Cell")}
-                  </DataTableBodyCell>
+            <Table {...getTableProps()}>
+              <SoftBox component="thead">
+                {headerGroups.map((headerGroup, key) => (
+                  <TableRow key={key} {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column, key) => (
+                      <DataTableHeadCell
+                        key={key}
+                        {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
+                        width={column.width ? column.width : "auto"}
+                        align={column.align ? column.align : "left"}
+                        sorted={setSortedValue(column)}
+                      >
+                        {column.render("Header")}
+                      </DataTableHeadCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+              </SoftBox>
+              <TableBody {...getTableBodyProps()}>
+                {page.map((row, key) => {
+                  prepareRow(row);
+                  return (
+                    <TableRow key={key} {...row.getRowProps()}>
+                      {row.cells.map((cell, key) => (
+                        <DataTableBodyCell
+                          key={key}
+                          noBorder={noEndBorder && rows.length - 1 === key}
+                          align={cell.column.align ? cell.column.align : "left"}
+                          {...cell.getCellProps()}
+                        >
+                          {cell.render("Cell")}
+                        </DataTableBodyCell>
+                      ))}
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
 
-      { <SoftBox
-        display="flex"
-        flexDirection={{ xs: "column", sm: "row" }}
-        justifyContent="space-between"
-        alignItems={{ xs: "flex-start", sm: "center" }}
-        p={3}
-      >
-          <SoftBox mb={{ xs: 3, sm: 0 }}>
-            <SoftTypography variant="button" color="secondary" fontWeight="regular">
-              Showing {entriesStart} to {entriesEnd} of {totalEntries} entries
-            </SoftTypography>
-          </SoftBox>
-          <Pagination  count={100}  color="secondary" circular="true" page={curPage} onChange={handleChange} />
-      </SoftBox>}
-    </TableContainer>
+            {<SoftBox
+              display="flex"
+              flexDirection={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+              alignItems={{ xs: "flex-start", sm: "center" }}
+              p={3}
+            >
+              <SoftBox mb={{ xs: 3, sm: 0 }}>
+                <SoftTypography variant="button" color="secondary" fontWeight="regular">
+                  Showing {entriesStart} to {entriesEnd} of {totalEntries} entries
+                </SoftTypography>
+              </SoftBox>
+              <Pagination count={pageNums} color="secondary" circular="true" page={curPage} onChange={handleChange} />
+            </SoftBox>}
+          </TableContainer>
         </Card>
       </SoftBox>
     </DashboardLayout>

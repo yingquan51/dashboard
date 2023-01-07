@@ -15,7 +15,11 @@ import ivana from "assets/images/ivana-squares.jpg";
 
 const dataTableData = {
   columns: [
-    { Header: "id", accessor: "id", Cell: ({ value }) => <IdCell id={value} clickFunc={()=>{console.log(value)}}/> },
+    {
+      Header: "id",
+      accessor: "id",
+      Cell: ({ value }) => <IdCell id={value} clickFunc={()=>{console.log(value)}}/>
+    },
     {
       Header: "date",
       accessor: "date",
@@ -59,7 +63,11 @@ const dataTableData = {
         );
       },
     },
-    { Header: "revenue", accessor: "revenue", Cell: ({ value }) => <DefaultCell value={value} /> }
+    {
+      Header: "revenue",
+      accessor: "revenue",
+      Cell: ({ value }) => <DefaultCell value={value} />
+    }
   ],
 
   rows: [
