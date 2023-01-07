@@ -23,8 +23,8 @@ import { useNavigate } from 'react-router-dom';
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
-  const [admin, setAdmin] = useState("");
-  const [password, setPassword] = useState("");
+  const [admin, setAdmin] = useState(localStorage.getItem("admin") ? localStorage.getItem("admin") : "");
+  const [password, setPassword] = useState(localStorage.getItem("password") ? localStorage.getItem("password") : "");
   const navigate = useNavigate();
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -43,6 +43,10 @@ function Basic() {
       if (response.data.status && response.data.status === "正常") {
         Swal.fire("", "Sign In Success", "success");  // "await" not allowed
         localStorage.setItem("token", response.data.token);
+        if (rememberMe) {
+          localStorage.setItem("admin", admin);
+          localStorage.setItem("password", password);
+        }
         navigate("/home");
         window.location.reload()
       }
@@ -77,7 +81,7 @@ function Basic() {
               <SoftInput type="text" placeholder="Account ID" value={admin} onChange={(e)=>{setAdmin(e.target.value)}}/>
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="password" placeholder="PassWord" onChange={(e)=>{setPassword(e.target.value)}}/>
+              <SoftInput type="password" placeholder="PassWord" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
             </SoftBox>
             <SoftBox display="flex" alignItems="center">
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />

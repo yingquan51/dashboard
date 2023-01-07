@@ -44,6 +44,10 @@ function Basic() {
       console.log(response.data)
       if (response.data.status && response.data.status === 1) {
         Swal.fire("", "Sign Up Success", "success");  // "await" not allowed
+        if (rememberMe) {
+          localStorage.setItem("admin", admin);
+          localStorage.setItem("password", password);
+        }
         navigate("/login");
         window.location.reload()
       }
@@ -76,7 +80,7 @@ function Basic() {
               <SoftInput type="text" placeholder="Account ID" value={admin} onChange={(e)=>{setAdmin(e.target.value)}}/>
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="password" placeholder="PassWord" onChange={(e)=>{setPassword(e.target.value)}}/>
+              <SoftInput type="password" placeholder="PassWord" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
             </SoftBox>
             <SoftBox display="flex" alignItems="center">
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
