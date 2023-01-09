@@ -35,7 +35,7 @@ function DataTableBodyCell({ noBorder, align, children }) {
       textAlign={align}
       fontSize={size.sm}
       borderBottom={noBorder ? "none" : `${borderWidth[1]} solid ${light.main}`}
-      py={1.5}
+      py={0.5}
       px={3}
     >
       <SoftBox
