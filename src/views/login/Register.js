@@ -30,7 +30,7 @@ function Basic() {
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   const handleSignUp = async () => {
-    axios.defaults.baseURL = "http://127.0.0.1:5000";
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
     axios({
       method: "POST",
       url: "/api/info/add",

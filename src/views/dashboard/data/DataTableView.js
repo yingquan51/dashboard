@@ -63,7 +63,7 @@ function DataTableView() {
 
   useEffect(() => {  // 页面第一次加载时，向后端请求数据
     //console.log(admin, password);
-    axios.defaults.baseURL = "http://127.0.0.1:5000";
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
     axios({
       method: "GET",
       url: "/api/info/get",

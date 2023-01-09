@@ -30,7 +30,7 @@ function Basic() {
 
   const handleSignIn = async () => {
     //console.log(admin, password);
-    axios.defaults.baseURL = "http://127.0.0.1:5000";
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
     axios({
       method: "GET",
       url: "/api/login",
