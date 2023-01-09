@@ -60,13 +60,13 @@ function Basic() {
   return (
     <BasicLayout
       title="Welcome!"
-      description="Use these email and password to login or create new account for free."
+      description="欢迎使用后台系统，输入名称、账号和密码进行注册"
       image={curved9}
     >
       <Card>
         <SoftBox p={3} mb={1} textAlign="center">
           <SoftTypography variant="h5" fontWeight="medium">
-            Sign up
+            注册
           </SoftTypography>
         </SoftBox>
         <SoftBox mb={2}>
@@ -90,12 +90,12 @@ function Basic() {
                 onClick={handleSetRememberMe}
                 sx={{ cursor: "pointer", userSelect: "none" }}
               >
-                &nbsp;&nbsp;Remember me
+                &nbsp;&nbsp;记住密码
               </SoftTypography>
             </SoftBox>
             <SoftBox mt={4} mb={1}>
               <SoftButton variant="gradient" color="info" fullWidth onClick={handleSignUp}>
-                sign up
+                注册
               </SoftButton>
             </SoftBox>
           </SoftBox>

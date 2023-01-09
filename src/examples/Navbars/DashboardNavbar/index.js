@@ -172,7 +172,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     fontWeight="medium"
                     color={light ? "white" : "dark"}
                   >
-                    Sign out
+                    登出
                   </SoftTypography>
                 </IconButton>
               </Link>

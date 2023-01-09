@@ -139,7 +139,7 @@ function DataTableView() {
       <SoftBox my={3}>
         <SoftBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
           <SoftButton variant="gradient" color="info">
-            new data
+            new table
           </SoftButton>
           <SoftBox display="flex">
             <SoftButton variant={menu ? "contained" : "outlined"} color="dark" onClick={openMenu}>
@@ -166,12 +166,12 @@ function DataTableView() {
                   size="small"
                 />
                 <SoftTypography variant="caption" color="secondary">
-                  &nbsp;&nbsp;entries per page
+                  &nbsp;&nbsp;每页数量
                 </SoftTypography>
               </SoftBox>}
               <SoftBox width="12rem" ml="auto">
                 <SoftInput
-                  placeholder="Search..."
+                  placeholder="搜索..."
                   value={search}
                   onChange={({ currentTarget }) => {
                     setSearch(search);
@@ -230,7 +230,7 @@ function DataTableView() {
             >
               <SoftBox mb={{ xs: 3, sm: 0 }}>
                 <SoftTypography variant="button" color="secondary" fontWeight="regular">
-                  Showing {entriesStart} to {entriesEnd} of {total} entries
+                  展示第 {entriesStart} 到 {entriesEnd} 条数据（共 {total} 条）
                 </SoftTypography>
               </SoftBox>
               <Pagination

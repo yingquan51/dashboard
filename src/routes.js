@@ -11,7 +11,7 @@ const routes = [
   { type: "title", title: "Pages", key: "title-pages" },
   {
     type: "collapse",
-    name: "UserManage",
+    name: "用户管理",
     key: "user",
     icon: <SettingsIcon size="12px" />,
     collapse: [
@@ -34,12 +34,12 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "DataManage",
+    name: "数据管理",
     key: "data",
     icon: <Document size="12px" />,
     collapse: [
       {
-        name: "DataTable",
+        name: "病人信息",
         key: "table",
         route: "/data/table"
       },
@@ -49,7 +49,7 @@ const routes = [
         route: "/data/review"
       },
       {
-        name: "DataUpload",
+        name: "上传数据",
         key: "upload",
         route: "/data/upload"
       }

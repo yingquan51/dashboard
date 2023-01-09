@@ -47,7 +47,8 @@ function Basic() {
           localStorage.setItem("admin", admin);
           localStorage.setItem("password", password);
         }
-        navigate("/home");
+        // navigate("/home");
+        navigate("/data/table");
         window.location.reload();
       }
       else{
@@ -64,13 +65,13 @@ function Basic() {
   return (
     <BasicLayout
       title="Welcome!"
-      description="Use these email and password to login or create new account for free."
+      description="欢迎使用后台系统，使用账号和密码进行登录"
       image={curved9}
     >
       <Card>
         <SoftBox p={3} mb={1} textAlign="center">
           <SoftTypography variant="h5" fontWeight="medium">
-            Sign in
+            登录
           </SoftTypography>
         </SoftBox>
         <SoftBox mb={2}>
@@ -91,12 +92,12 @@ function Basic() {
                 onClick={handleSetRememberMe}
                 sx={{ cursor: "pointer", userSelect: "none" }}
               >
-                &nbsp;&nbsp;Remember me
+                &nbsp;&nbsp;记住密码
               </SoftTypography>
             </SoftBox>
             <SoftBox mt={4} mb={1}>
               <SoftButton variant="gradient" color="info" fullWidth onClick={handleSignIn}>
-                sign in
+                登录
               </SoftButton>
             </SoftBox>
             <SoftBox mt={1} mb={3}>
@@ -108,7 +109,7 @@ function Basic() {
                 fullWidth
                 onClick={handleSignUp}
               >
-                sign up
+                注册
               </SoftButton>
             </SoftBox>
           </SoftBox>
