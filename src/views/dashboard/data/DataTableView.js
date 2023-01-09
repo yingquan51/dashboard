@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useState } from "react";
 import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from "react-table";
+import axios from "axios";
 
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
@@ -23,50 +24,21 @@ import Pagination from "@mui/material/Pagination";
 
 // Data
 import columns from "./columns";
-import axios from "axios";
 
 function DataTableView() {
   // const data = useMemo(() => dataTableData.rows, [dataTableData]);
 
   // 分页相关
   const [curPage, setCurPage] = useState(1);
-  const [pageSize, setPageSize] = useState(9);
   const [data, setData] = useState([]);
-  const [totalEntries, setTotalEntries] = useState(100);
-  const [pageNums, setPageNums] = useState(10);
-  const entriesStart = (curPage - 1) * pageSize + 1;
-  const entriesEnd = (curPage) * pageSize > totalEntries ? totalEntries : (curPage) * pageSize;
-
-  const handleChange = (event, value) => {
-    console.log("goto:", value);
-    setCurPage(value);
-  };
-
+  const [total, setTotal] = useState(0);
 
   const entriesPerPage = { defaultValue: 10, entries: [5, 10, 15, 20, 25] };
   const isSorted = true;
   const noEndBorder = false;
 
-  useEffect(() => {
-    //console.log(admin, password);
-    axios.defaults.baseURL = "http://127.0.0.1:5000";
-    axios({
-      method: "GET",
-      url: "/api/info/get",
-      headers: {
-        "x-session-token": localStorage.getItem("token")
-      }
-    }).then(response=>{
-      console.log(response)
-      const {data, total} = response.data
-      setData(data);
-      setTotalEntries(total);
-      setPageNums(Math.ceil(total / pageSize));
-    })
-  }, [])
-
   const tableInstance = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize: pageSize } },
+    { columns, data, initialState: { pageIndex: 0, pageSize: 10 } },
     useGlobalFilter,
     useSortBy,
     usePagination,
@@ -80,9 +52,37 @@ function DataTableView() {
     rows,
     page,
     setGlobalFilter,
-    state: { globalFilter },
+    pageCount,
+    gotoPage,
+    setPageSize,
+    state: { globalFilter, pageSize },
   } = tableInstance;
 
+  const entriesStart = (curPage - 1) * pageSize + 1;
+  const entriesEnd = (curPage) * pageSize > total ? total : (curPage) * pageSize;
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    //console.log(admin, password);
+    axios.defaults.baseURL = "http://127.0.0.1:5000";
+    axios({
+      method: "GET",
+      url: "/api/info/get",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      console.log(response);
+      const { data, total } = response.data;
+      setData(data);
+      setTotal(total);
+    });
+  }, []);
+
+  const handleChange = (event, value) => {
+    console.log("goto:", value);
+    gotoPage(value - 1);  // react-table的分页从0开始，mui的分页从1开始
+    setCurPage(value);
+  };
 
   const setEntriesPerPage = ({ value }) => {
     console.log("set per page :", value);
@@ -230,10 +230,18 @@ function DataTableView() {
             >
               <SoftBox mb={{ xs: 3, sm: 0 }}>
                 <SoftTypography variant="button" color="secondary" fontWeight="regular">
-                  Showing {entriesStart} to {entriesEnd} of {totalEntries} entries
+                  Showing {entriesStart} to {entriesEnd} of {total} entries
                 </SoftTypography>
               </SoftBox>
-              <Pagination count={pageNums} color="secondary" circular="true" page={curPage} onChange={handleChange} />
+              <Pagination
+                count={pageCount}
+                color="secondary"
+                circular="true"
+                page={curPage}
+                onChange={handleChange}
+                showFirstButton={true}
+                showLastButton={true}
+              />
             </SoftBox>}
           </TableContainer>
         </Card>
