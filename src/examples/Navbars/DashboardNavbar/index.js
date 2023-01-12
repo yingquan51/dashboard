@@ -157,7 +157,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 icon={{ component: "search", direction: "left" }}
               />
             </SoftBox>
-            <SoftBox color={light ? "white" : "inherit"} onClick={()=>{localStorage.removeItem('token')}}>
+            <SoftBox color={light ? "white" : "inherit"}
+                     onClick={()=>{
+                       localStorage.removeItem('token');
+                       localStorage.removeItem('tokenExpiredTime');
+                     }}>
               <Link to="/login">
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon

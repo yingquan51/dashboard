@@ -43,12 +43,14 @@ function Basic() {
       if (response.data.status && response.data.status === "正常") {
         Swal.fire("Sign In Success", "", "success");  // "await" not allowed
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("tokenExpiredTime", new Date().getTime() + response.data.expire * 60 * 1000);
+        console.log(localStorage.getItem("tokenExpiredTime"));
         if (rememberMe) {
           localStorage.setItem("admin", admin);
           localStorage.setItem("password", password);
         }
-        // navigate("/home");
-        navigate("/data/table");
+        navigate("/home");
+        // navigate("/data/table");
         window.location.reload();
       }
       else{
