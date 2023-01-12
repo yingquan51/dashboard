@@ -44,6 +44,11 @@ const routes = [
         route: "/data/table"
       },
       {
+        name: "病人年龄分布",
+        key: "pieChartTable",
+        route: "/data/pieChartTable"
+      },
+      {
         name: "DataReview",
         key: "review",
         route: "/data/review"

@@ -8,6 +8,7 @@ import User from "../views/dashboard/user/User";
 import Error from "../views/other/Error";
 import DataTableView from "views/dashboard/data/DataTableView";
 import UploadData from "views/dashboard/data/uploadData";
+import PieChartTableView from "views/dashboard/data/PieChartTableView"
 
 export default function IndexRouter() {
   const isToken = localStorage.getItem("token");
@@ -27,6 +28,7 @@ export default function IndexRouter() {
         </Route>
         <Route path="data">
           <Route path="table" element={<DataTableView />} />
+          <Route path="pieChartTable" element={<PieChartTableView />} />
           <Route path="review" element={<User />} />
           <Route path="upload" element={<UploadData />} />
         </Route>
