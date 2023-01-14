@@ -9,16 +9,16 @@ import axios from "axios";
 
 const { gradients, dark } = colors;
 
-const defaultData = {
-  labels: ["1", "2", "3", "4", "5", "6"],
-  datasets: {
-    label: "# of Votes",
-    data: [12, 19, 3, 5, 2, 3],
-  },
-};
-
 function PieChartTableView() {
-  const [data, setData] = useState([]);
+  const labels = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-99", ">=100"];
+  const [data, setData] = useState({
+        labels: labels,
+        datasets: {
+          label: "# of Votes",
+          data: [],
+        },
+      });
+
 
   useEffect(() => {  // 页面第一次加载时，向后端请求数据
     //console.log(admin, password);
@@ -30,19 +30,28 @@ function PieChartTableView() {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
-      console.log(response);
-      setData(response.data.data);
+      const ageCounts = new Array(11).fill(0);
+      response.data.data.forEach((obj) => {  // 统计年龄分布
+        const ageIdx = Math.min(Math.floor(obj.age / 10), 10);  // 100岁以上放在一起统计
+        ageCounts[ageIdx] = ageCounts[ageIdx] ? ageCounts[ageIdx] + 1 : 1;
+      });
+      // console.log(data);
+      setData({
+        labels: labels,
+        datasets: {
+          label: "# of Votes",
+          data: ageCounts,
+        },
+      });
     });
   }, []);
-
-
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <PieChart
         title={"病人年龄扇形图"}
-        chart={defaultData}
+        chart={data}
       >
       </PieChart>
     </DashboardLayout>
