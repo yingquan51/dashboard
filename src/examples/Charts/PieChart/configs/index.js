@@ -22,6 +22,14 @@ const { gradients, dark } = colors;
 function configs(labels, datasets) {
   const backgroundColors = [];
 
+  const randomColor = (obj) => {
+    const keys = Object.keys(obj);
+    // const random = keys.length * Math.random() << 0;
+    const random = parseInt(keys.length * Math.random(), 0);
+    console.log(random);
+    return obj[keys[random]].state;
+  };
+
   if (datasets.backgroundColors) {
     datasets.backgroundColors.forEach((color) =>
       gradients[color]
@@ -29,7 +37,8 @@ function configs(labels, datasets) {
         : backgroundColors.push(dark.main)
     );
   } else {
-    backgroundColors.push(dark.main);
+    // backgroundColors.push(dark.main);
+    datasets.data.forEach(() => backgroundColors.push(randomColor(gradients)));
   }
 
   return {
