@@ -137,24 +137,24 @@ function DataTableView() {
     <DashboardLayout>
       <DashboardNavbar />
       <SoftBox my={3}>
-        <SoftBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-          <SoftButton variant="gradient" color="info">
-            new table
-          </SoftButton>
-          <SoftBox display="flex">
-            <SoftButton variant={menu ? "contained" : "outlined"} color="dark" onClick={openMenu}>
-              filters&nbsp;
-              <Icon>keyboard_arrow_down</Icon>
-            </SoftButton>
-            {renderMenu}
-            <SoftBox ml={1}>
-              <SoftButton variant="outlined" color="dark">
-                <Icon>description</Icon>
-                &nbsp;export csv
-              </SoftButton>
-            </SoftBox>
-          </SoftBox>
-        </SoftBox>
+        {/*<SoftBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>*/}
+        {/*  <SoftButton variant="gradient" color="info">*/}
+        {/*    new table*/}
+        {/*  </SoftButton>*/}
+        {/*  <SoftBox display="flex">*/}
+        {/*    <SoftButton variant={menu ? "contained" : "outlined"} color="dark" onClick={openMenu}>*/}
+        {/*      filters&nbsp;*/}
+        {/*      <Icon>keyboard_arrow_down</Icon>*/}
+        {/*    </SoftButton>*/}
+        {/*    {renderMenu}*/}
+        {/*    <SoftBox ml={1}>*/}
+        {/*      <SoftButton variant="outlined" color="dark">*/}
+        {/*        <Icon>description</Icon>*/}
+        {/*        &nbsp;export csv*/}
+        {/*      </SoftButton>*/}
+        {/*    </SoftBox>*/}
+        {/*  </SoftBox>*/}
+        {/*</SoftBox>*/}
         <Card>
           <TableContainer sx={{ boxShadow: "none" }}>
             <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>

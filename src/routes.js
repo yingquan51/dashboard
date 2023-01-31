@@ -9,29 +9,29 @@ import Document from "examples/Icons/Document";
 
 const routes = [
   { type: "title", title: "Pages", key: "title-pages" },
-  {
-    type: "collapse",
-    name: "用户管理",
-    key: "user",
-    icon: <SettingsIcon size="12px" />,
-    collapse: [
-      {
-        name: "User",
-        key: "User",
-        route: "/user/user"
-      },
-      {
-        name: "Logs",
-        key: "logs",
-        route: "/user/logs"
-      },
-      {
-        name: "Profile",
-        key: "profile",
-        route: "/user/profile"
-      }
-    ],
-  },
+  // {
+  //   type: "collapse",
+  //   name: "用户管理",
+  //   key: "user",
+  //   icon: <SettingsIcon size="12px" />,
+  //   collapse: [
+  //     {
+  //       name: "User",
+  //       key: "User",
+  //       route: "/user/user"
+  //     },
+  //     {
+  //       name: "Logs",
+  //       key: "logs",
+  //       route: "/user/logs"
+  //     },
+  //     {
+  //       name: "Profile",
+  //       key: "profile",
+  //       route: "/user/profile"
+  //     }
+  //   ],
+  // },
   {
     type: "collapse",
     name: "数据管理",
@@ -47,11 +47,6 @@ const routes = [
         name: "病人年龄分布",
         key: "pieChartTable",
         route: "/data/pieChartTable"
-      },
-      {
-        name: "DataReview",
-        key: "review",
-        route: "/data/review"
       },
       {
         name: "上传数据",

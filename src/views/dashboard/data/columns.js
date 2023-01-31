@@ -34,8 +34,18 @@ const columns = [
     Cell: ({ value }) => <DefaultCell value={value ? value.toString() : ""} />,
   },
   {
-    Header: "site",
-    accessor: "site",
+    Header: "cyDate",
+    accessor: "cyDate",
+    Cell: ({ value }) => <DefaultCell value={value ? value.toString() : ""} />,
+  },
+  {
+    Header: "death",
+    accessor: "death",
+    Cell: ({ value }) => <DefaultCell value={value ? value.toString() : ""} />,
+  },
+  {
+    Header: "deathtime",
+    accessor: "deathtime",
     Cell: ({ value }) => <DefaultCell value={value ? value.toString() : ""} />,
   },
 ];
