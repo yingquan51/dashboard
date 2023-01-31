@@ -23,7 +23,7 @@ import DataTableBodyCell from "examples/Tables/DataTable/DataTableBodyCell";
 import Pagination from "@mui/material/Pagination";
 
 // Data
-import columns from "./columns";
+import patientColumns from "./columns/patientColumns";
 
 function DataTableView() {
   // const data = useMemo(() => dataTableData.rows, [dataTableData]);
@@ -38,7 +38,7 @@ function DataTableView() {
   const noEndBorder = false;
 
   const tableInstance = useTable(
-    { columns, data, initialState: { pageIndex: 0, pageSize: 10 } },
+    { columns: patientColumns, data, initialState: { pageIndex: 0, pageSize: 10 } },
     useGlobalFilter,
     useSortBy,
     usePagination,

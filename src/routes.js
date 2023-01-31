@@ -49,6 +49,11 @@ const routes = [
         route: "/data/pieChartTable"
       },
       {
+        name: "病人详细信息",
+        key: "patientDetailTables",
+        route: "/data/patientDetailTables"
+      },
+      {
         name: "上传数据",
         key: "upload",
         route: "/data/upload"
