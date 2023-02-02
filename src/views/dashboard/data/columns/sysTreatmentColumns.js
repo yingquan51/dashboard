@@ -1,21 +1,21 @@
 /* eslint-disable react/prop-types */
-import getCell from "./getCell";
+import { getIdCell, getDefaultCell} from "./getCell";
 
 const sysTreatmentColumns = [
   {
     Header: "编号",
     accessor: "",
-    Cell: getCell,
+    Cell: getIdCell,
   },
   {
     Header: "治疗措施名字",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "治疗措施备注",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
 ];
 

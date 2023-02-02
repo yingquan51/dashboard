@@ -1,26 +1,26 @@
 /* eslint-disable react/prop-types */
-import getCell from "./getCell";
+import { getIdCell, getDefaultCell} from "./getCell";
 
 const patientReappearColumns = [
   {
     Header: "编号",
     accessor: "",
-    Cell: getCell,
+    Cell: getIdCell,
   },
   {
     Header: "病案号",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "复发日期",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "复发位置编号",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
 ];
 

@@ -1,51 +1,51 @@
 /* eslint-disable react/prop-types */
-import getCell from "./getCell";
+import { getIdCell, getDefaultCell} from "./getCell";
 
 const patientColumns = [
   {
     Header: "病案号",
     accessor: "id",
-    Cell: getCell,
+    Cell: getIdCell,
   },
   {
     Header: "姓名",
     accessor: "name",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "电话",
     accessor: "phone",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "发病时年龄",
     accessor: "age",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "发现日期",
     accessor: "fbDate",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "入院日期",
     accessor: "ryDate",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "出院日期",
     accessor: "cyDate",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "死亡与否",
     accessor: "death",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "死亡时间",
     accessor: "deathtime",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
 ];
 

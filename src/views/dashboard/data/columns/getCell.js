@@ -1,5 +1,11 @@
 import IdCell from "../components/IdCell";
+import DefaultCell from "../components/DefaultCell";
 
-const getCell = ({ value }) => <IdCell id={value ? value.toString() : ""} />;
+const getIdCell = ({ value }) => <IdCell id={value ? value.toString() : ""} />;
 
-export default getCell;
+const getDefaultCell = ({ value }) => <DefaultCell value={value ? value.toString() : ""} />;
+
+export {
+  getIdCell,
+  getDefaultCell
+};

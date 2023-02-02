@@ -1,31 +1,31 @@
 /* eslint-disable react/prop-types */
-import getCell from "./getCell";
+import { getIdCell, getDefaultCell} from "./getCell";
 
 const postoperativeTreatmentColumns = [
   {
     Header: "编号",
     accessor: "",
-    Cell: getCell,
+    Cell: getIdCell,
   },
   {
     Header: "病案号",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "治疗措施编号",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "治疗时间",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
   {
     Header: "治疗备注",
     accessor: "",
-    Cell: getCell,
+    Cell: getDefaultCell,
   },
 ];
 

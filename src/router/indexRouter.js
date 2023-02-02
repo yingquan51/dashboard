@@ -10,6 +10,7 @@ import DataTableView from "views/dashboard/data/DataTableView";
 import UploadData from "views/dashboard/data/uploadData";
 import PieChartTableView from "views/dashboard/data/PieChartTableView"
 import PatientDetailTablesView from "../views/dashboard/data/PatientDetailTablesView";
+import AllColumnsView from "../views/dashboard/data/AllColumnsView";
 
 export default function IndexRouter() {
   const isToken = localStorage.getItem("token");
@@ -28,6 +29,7 @@ export default function IndexRouter() {
           <Route path="logs" element={<User />} />
         </Route>
         <Route path="data">
+          <Route path="allColumns" element={<AllColumnsView />} />
           <Route path="table" element={<DataTableView />} />
           <Route path="pieChartTable" element={<PieChartTableView />} />
           <Route path="patientDetailTables" element={<PatientDetailTablesView />} />

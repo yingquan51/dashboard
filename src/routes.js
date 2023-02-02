@@ -39,6 +39,11 @@ const routes = [
     icon: <Document size="12px" />,
     collapse: [
       {
+        name: "列名字段含义",
+        key: "allColumns",
+        route: "/data/allColumns"
+      },
+      {
         name: "病人信息",
         key: "table",
         route: "/data/table"
