@@ -6,12 +6,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
 import { Card } from "@mui/material";
-import TableChartIcon from '@mui/icons-material/TableChart';
+import TableChartIcon from "@mui/icons-material/TableChart";
 
 /**
  * 列表集合组件，每张列表都可以折叠
@@ -53,6 +51,7 @@ export default function CollapseTables(names, contents) {
   return (
     <List
       // sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ width: "95%" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={

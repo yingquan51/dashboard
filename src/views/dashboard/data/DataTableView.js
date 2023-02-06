@@ -6,7 +6,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 // Data
-import patientColumns from "./columns/patientColumns";
+import patientColumnCells from "./columns/patientColumnCells";
 import TableCard from "./components/TableCard";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -81,7 +81,7 @@ function DataTableView() {
         {/*    </SoftBox>*/}
         {/*  </SoftBox>*/}
         {/*</SoftBox>*/}
-        { TableCard(patientColumns, data, total) }
+        { TableCard(patientColumnCells, data, total) }
       </SoftBox>
     </DashboardLayout>
   );
