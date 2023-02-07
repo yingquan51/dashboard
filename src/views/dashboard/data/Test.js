@@ -1,20 +1,22 @@
-import Card from "@mui/material/Card";
 import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
-import SoftBox from "../../../components/SoftBox";
-import CollapseTables from "./components/CollapseTables";
-
+import FormTable from "./components/FormTable";
 
 export default function Test() {
-
+  const tableExample = {
+    name: "table",
+    message: "hello",
+    data: [
+      { column: "hello", row: "hello" },
+      { column: "hello", row: "hello" },
+      { column: "hello", row: "hello" },
+      { column: "hello", row: "hello" },
+    ],
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <SoftBox my={3}>
-        <Card>
-          { CollapseTables([1, 2], [[1, 1], [2, 2]]) }
-        </Card>
-      </SoftBox>
+      { FormTable(tableExample) }
     </DashboardLayout>
   );
 }

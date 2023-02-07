@@ -9,111 +9,57 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // NewUser page components
-import FormField from "../FormField";
+import Card from "@mui/material/Card";
+import { useState } from "react";
 
-function UserInfo({ formData }) {
-  const { formField, values, errors, touched } = formData;
-  const { firstName, lastName, company, email, password, repeatPassword } = formField;
-  const {
-    firstName: firstNameV,
-    lastName: lastNameV,
-    company: companyV,
-    email: emailV,
-    password: passwordV,
-    repeatPassword: repeatPasswordV,
-  } = values;
-
+function FormTable(table) {
   return (
-    <SoftBox>
-      <SoftBox lineHeight={0}>
-        <SoftTypography variant="h5" fontWeight="bold">
-          About me
-        </SoftTypography>
-        <SoftTypography variant="button" fontWeight="regular" color="text">
-          Mandatory informations
-        </SoftTypography>
-      </SoftBox>
-      <SoftBox mt={1.625}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <FormField
-              type={firstName.type}
-              label={firstName.label}
-              name={firstName.name}
-              value={firstNameV}
-              placeholder={firstName.placeholder}
-              error={errors.firstName && touched.firstName}
-              success={firstNameV.length > 0 && !errors.firstName}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormField
-              type={lastName.type}
-              label={lastName.label}
-              name={lastName.name}
-              value={lastNameV}
-              placeholder={lastName.placeholder}
-              error={errors.lastName && touched.lastName}
-              success={lastNameV.length > 0 && !errors.lastName}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <FormField
-              type={company.type}
-              label={company.label}
-              name={company.name}
-              value={companyV}
-              placeholder={company.placeholder}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormField
-              type={email.type}
-              label={email.label}
-              name={email.name}
-              value={emailV}
-              placeholder={email.placeholder}
-              error={errors.email && touched.email}
-              success={emailV.length > 0 && !errors.email}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <FormField
-              type={password.type}
-              label={password.label}
-              name={password.name}
-              value={passwordV}
-              placeholder={password.placeholder}
-              error={errors.password && touched.password}
-              success={passwordV.length > 0 && !errors.password}
-              inputProps={{ autoComplete: "" }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormField
-              type={repeatPassword.type}
-              label={repeatPassword.label}
-              name={repeatPassword.name}
-              value={repeatPasswordV}
-              placeholder={repeatPassword.placeholder}
-              error={errors.repeatPassword && touched.repeatPassword}
-              success={repeatPasswordV.length > 0 && !errors.repeatPassword}
-              inputProps={{ autoComplete: "" }}
-            />
-          </Grid>
-        </Grid>
-      </SoftBox>
+    <SoftBox py={3}>
+      <Grid container justifyContent="center" sx={{ height: "100%" }}>
+        <Card sx={{ height: "100%" }}>
+          <SoftBox p={2}>
+            <SoftBox>
+              <SoftBox lineHeight={0}>
+                <SoftTypography variant="h5" fontWeight="bold">
+                  {table.name}
+                </SoftTypography>
+                <SoftTypography variant="button" fontWeight="regular" color="text">
+                  {table.message}
+                </SoftTypography>
+              </SoftBox>
+              <SoftBox mt={1.625}>
+                <Grid container spacing={3}>
+                  {
+                    table.data.map((v, i) =>
+                      <Grid item xs={12} sm={6} key={i}>
+                        <SoftBox mb={1.5}>
+                          <SoftBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+                            <SoftTypography
+                              component="label"
+                              variant="caption"
+                              fontWeight="bold"
+                              textTransform="capitalize"
+                            >
+                              {v.column}
+                            </SoftTypography>
+                          </SoftBox>
+                          <SoftBox>
+                            <SoftTypography variant="body2">
+                              {v.row}
+                            </SoftTypography>
+                          </SoftBox>
+                        </SoftBox>
+                      </Grid>,
+                    )
+                  }
+                </Grid>
+              </SoftBox>
+            </SoftBox>
+          </SoftBox>
+        </Card>
+      </Grid>
     </SoftBox>
   );
 }
 
-// typechecking props for UserInfo
-UserInfo.propTypes = {
-  formData: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
-};
-
-export default UserInfo;
+export default FormTable;

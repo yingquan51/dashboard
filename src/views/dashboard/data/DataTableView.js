@@ -6,7 +6,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 // Data
-import patientColumnCells from "./columns/patientColumnCells";
+import { patientColumnCells } from "./columns/patientColumnCells";
 import TableCard from "./components/TableCard";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";

@@ -10,6 +10,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Card } from "@mui/material";
 import TableChartIcon from "@mui/icons-material/TableChart";
+import Grid from "@mui/material/Grid";
 
 /**
  * 列表集合组件，每张列表都可以折叠
@@ -49,17 +50,21 @@ export default function CollapseTables(names, contents) {
   };
 
   return (
-    <List
-      // sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      sx={{ width: "95%" }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          病人详情信息
-        </ListSubheader>
-      }>
-      {opens.map((value, index) => getItem(index, names[index], contents[index]))}
-    </List>
+    <Grid container justifyContent="center" sx={{ height: "100%" }}>
+      <Grid item xs={12} lg={8}>
+        <List
+          // sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+          sx={{ width: "95%" }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              病人详情信息
+            </ListSubheader>
+          }>
+          {opens.map((value, index) => getItem(index, names[index], contents[index]))}
+        </List>
+      </Grid>
+    </Grid>
   );
 }

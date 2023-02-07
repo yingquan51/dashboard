@@ -62,7 +62,12 @@ const routes = [
         name: "上传数据",
         key: "upload",
         route: "/data/upload"
-      }
+      },
+      {
+        name: "Test",
+        key: "test",
+        route: "/data/test"
+      },
     ]
   }
 ];

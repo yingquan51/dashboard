@@ -9,4 +9,7 @@ const tableIndex = sheetName[Object.keys(sheetName)[0]];
 const patientColumns = allColumns.slice(tableIndex[0]-1, tableIndex[1]-1);
 const patientColumnCells = getColumnCells(patientColumns);
 
-export default patientColumnCells;
+export {
+  patientColumns,
+  patientColumnCells,
+}
