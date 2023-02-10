@@ -9,7 +9,7 @@ const getColumnCells = (columns) => {
   const res = [];
   columns.forEach((v, i) => {
     res[i] = {
-      Header: v.name,
+      Header: v,
       accessor: "",
       Cell: i == 0 ? getIdCell : getDefaultCell,
     }

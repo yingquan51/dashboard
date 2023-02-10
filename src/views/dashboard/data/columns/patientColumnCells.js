@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { getColumnCells } from "./util";
 import { allColumns } from "./allColumns";
-import { allTables } from "./allTables"
+import { allTables, allSheetNames } from "./allTables"
 
-const sheetName = allTables[Object.keys(allTables)[0]];
-const tableIndex = sheetName[Object.keys(sheetName)[0]];
 
-const patientColumns = allColumns.slice(tableIndex[0]-1, tableIndex[1]-1);
+const sheet = allTables[allSheetNames[0]]
+const table = sheet[Object.keys(sheet)[0]];
+const patientColumns = table.columns;
 const patientColumnCells = getColumnCells(patientColumns);
+console.log(patientColumnCells);
 
 export {
   patientColumns,
