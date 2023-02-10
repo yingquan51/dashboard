@@ -11,6 +11,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Card } from "@mui/material";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import Grid from "@mui/material/Grid";
+import SoftBox from "../../../../components/SoftBox";
 
 /**
  * 列表集合组件，每张列表都可以折叠
@@ -20,7 +21,7 @@ import Grid from "@mui/material/Grid";
  * @constructor
  */
 export default function CollapseTables(names, contents) {
-  const len = Math.min(names.length, contents.length);
+  const [len, setLen] = useState(names.length);
   const [opens, setOpens] = useState(Array(len).fill(false));
 
   const handleClick = (index) => {
@@ -39,11 +40,7 @@ export default function CollapseTables(names, contents) {
           {opens[index] ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={opens[index]} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              {content}
-            </ListItemButton>
-          </List>
+          {content}
         </Collapse>
       </Card>
     );

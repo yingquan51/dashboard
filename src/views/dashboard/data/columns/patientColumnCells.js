@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { getColumnCells } from "./util";
-import allColumns from "./allColumns";
+import { allColumns } from "./allColumns";
 import { allTables } from "./allTables"
 
 const sheetName = allTables[Object.keys(allTables)[0]];

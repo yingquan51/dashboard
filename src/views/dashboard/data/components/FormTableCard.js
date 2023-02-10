@@ -11,8 +11,9 @@ import SoftTypography from "components/SoftTypography";
 // NewUser page components
 import Card from "@mui/material/Card";
 import { useState } from "react";
+import SoftInput from "../../../../components/SoftInput";
 
-function FormTable(table) {
+function FormTableCard(table) {
   return (
     <SoftBox py={3}>
       <Grid container justifyContent="center" sx={{ height: "100%" }}>
@@ -28,7 +29,7 @@ function FormTable(table) {
                 </SoftTypography>
               </SoftBox>
               <SoftBox mt={1.625}>
-                <Grid container spacing={3}>
+                <Grid container spacing={1}>
                   {
                     table.data.map((v, i) =>
                       <Grid item xs={12} sm={6} key={i}>
@@ -44,9 +45,10 @@ function FormTable(table) {
                             </SoftTypography>
                           </SoftBox>
                           <SoftBox>
-                            <SoftTypography variant="body2">
-                              {v.row}
-                            </SoftTypography>
+                            {/*<SoftTypography variant="body2">*/}
+                            {/*  {v.row}*/}
+                            {/*</SoftTypography>*/}
+                            <SoftInput value={v.row}/>
                           </SoftBox>
                         </SoftBox>
                       </Grid>,
@@ -62,4 +64,4 @@ function FormTable(table) {
   );
 }
 
-export default FormTable;
+export default FormTableCard;

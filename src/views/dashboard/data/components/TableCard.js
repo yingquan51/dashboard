@@ -12,6 +12,7 @@ import DataTableHeadCell from "../../../../examples/Tables/DataTable/DataTableHe
 import TableBody from "@mui/material/TableBody";
 import DataTableBodyCell from "../../../../examples/Tables/DataTable/DataTableBodyCell";
 import Pagination from "@mui/material/Pagination";
+import Grid from "@mui/material/Grid";
 
 /**
  *
@@ -21,7 +22,7 @@ import Pagination from "@mui/material/Pagination";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function TableCard(columns, data, total) {
+export default function TableCard(tableName, columns, data, total) {
   // 分页相关
   const [curPage, setCurPage] = useState(1);
 
@@ -86,6 +87,11 @@ export default function TableCard(columns, data, total) {
   return (
     <Card>
       <TableContainer sx={{ boxShadow: "none" }}>
+        <Grid container justifyContent="center" mt={2}>
+          <SoftTypography variant="h3" fontWeight="bold">
+            {tableName}
+          </SoftTypography>
+        </Grid>
         <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
           {<SoftBox display="flex" alignItems="center">
             <SoftSelect

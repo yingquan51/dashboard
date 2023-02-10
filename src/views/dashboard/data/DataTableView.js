@@ -81,7 +81,7 @@ function DataTableView() {
         {/*    </SoftBox>*/}
         {/*  </SoftBox>*/}
         {/*</SoftBox>*/}
-        { TableCard(patientColumnCells, data, total) }
+        { TableCard("病人基本信息", patientColumnCells, data, total) }
       </SoftBox>
     </DashboardLayout>
   );

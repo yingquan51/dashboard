@@ -1,6 +1,6 @@
 import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
-import FormTable from "./components/FormTable";
+import FormTableCard from "./components/FormTableCard";
 
 export default function Test() {
   const tableExample = {
@@ -16,7 +16,7 @@ export default function Test() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      { FormTable(tableExample) }
+      { FormTableCard(tableExample) }
     </DashboardLayout>
   );
 }
