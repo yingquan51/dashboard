@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { getColumnCells } from "./util";
-import { allColumns } from "./allColumns";
 import { allTables, allSheetNames } from "./allTables"
 
 

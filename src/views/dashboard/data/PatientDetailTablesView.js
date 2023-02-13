@@ -15,14 +15,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 
 function PatientDetailTablesView() {
   const [data, setData] = useState([]);
-  const [patientId, setPatientId] = useState(1);
+  const [patientId, setPatientId] = useState(1001);
   const [contents, setContents] = useState([]);
 
   useEffect(() => {
     axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
     axios({
       method: "GET",
-      url: "/",
+      url: "/patient/info",
       headers: {
         "x-session-token": localStorage.getItem("token"),
       },
@@ -38,7 +38,7 @@ function PatientDetailTablesView() {
         const sheet = allTables[sheetName];
         const tableNames = Object.keys(sheet);
         const content = [];
-        tableNames.forEach((tableName) => {
+        tableNames.forEach((tableName, index) => {
           const name = sheet[tableName]["name"];
           const fields = sheet[tableName]["fields"];
           const columns = sheet[tableName]["columns"];
@@ -50,7 +50,7 @@ function PatientDetailTablesView() {
             };
           }
           content.push(
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton sx={{ pl: 4 }} key={index}>
               {FormTableCard({ name: tableName, message: name, data: tableData })}
             </ListItemButton>
           );
