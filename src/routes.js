@@ -46,7 +46,7 @@ const routes = [
       {
         name: "病人信息",
         key: "table",
-        route: "/data/table"
+        route: "/data/patientTable"
       },
       {
         name: "病人年龄分布",

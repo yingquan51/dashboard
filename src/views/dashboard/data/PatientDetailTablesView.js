@@ -6,10 +6,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import CollapseTables from "./components/CollapseTables";
 import { allSheetNames, allTables } from "./columns/allTables";
 import axios from "axios";
-import { patientColumns } from "./columns/patientColumnCells";
 import FormTableCard from "./components/FormTableCard";
-import { allColumns } from "./columns/allColumns";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 

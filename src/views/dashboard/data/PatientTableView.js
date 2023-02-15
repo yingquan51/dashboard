@@ -5,14 +5,18 @@ import SoftBox from "components/SoftBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
-// Data
-import { patientColumnCells } from "./columns/patientColumnCells";
+// Data\
 import TableCard from "./components/TableCard";
+import { allSheetNames, allTables } from "./columns/allTables";
+import { getColumnCells } from "./columns/util";
 
-function DataTableView() {
+function PatientTableView() {
   // const data = useMemo(() => dataTableData.rows, [dataTableData]);
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
+  const sheet = allTables[allSheetNames[0]];
+  const table = sheet[Object.keys(sheet)[0]];
+  const [columns, setColumns] = useState(getColumnCells(table));
 
   useEffect(() => {  // 页面第一次加载时，向后端请求数据
     //console.log(admin, password);
@@ -35,10 +39,10 @@ function DataTableView() {
     <DashboardLayout>
       <DashboardNavbar />
       <SoftBox my={3}>
-        { TableCard("病人基本信息", patientColumnCells, data, total) }
+        {TableCard("病人基本信息", columns, data, total)}
       </SoftBox>
     </DashboardLayout>
   );
 }
 
-export default DataTableView;
+export default PatientTableView;

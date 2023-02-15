@@ -6,7 +6,7 @@ import Register from "../views/login/Register";
 import Home from "../views/dashboard/home/Home";
 import User from "../views/dashboard/user/User";
 import Error from "../views/other/Error";
-import DataTableView from "views/dashboard/data/DataTableView";
+import PatientTableView from "views/dashboard/data/PatientTableView";
 import UploadData from "views/dashboard/data/uploadData";
 import PieChartTableView from "views/dashboard/data/PieChartTableView"
 import PatientDetailTablesView from "../views/dashboard/data/PatientDetailTablesView";
@@ -31,7 +31,7 @@ export default function IndexRouter() {
         </Route>
         <Route path="data">
           <Route path="allColumns" element={<AllColumnsView />} />
-          <Route path="table" element={<DataTableView />} />
+          <Route path="patientTable" element={<PatientTableView />} />
           <Route path="pieChartTable" element={<PieChartTableView />} />
           <Route path="patientDetailTables" element={<PatientDetailTablesView />} />
           <Route path="upload" element={<UploadData />} />
