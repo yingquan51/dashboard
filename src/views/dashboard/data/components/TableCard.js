@@ -22,7 +22,8 @@ import Grid from "@mui/material/Grid";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function TableCard(tableName, columns, data, total) {
+export default function TableCard(tableName, columns, data) {
+  const total = data.length;
   // 分页相关
   const [curPage, setCurPage] = useState(1);
 

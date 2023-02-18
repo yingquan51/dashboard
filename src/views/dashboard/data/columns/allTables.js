@@ -122,4 +122,6 @@ export {
   allSheetNames,
   allTableNames,
   allTableEnglishNames,
+  sampleStoreInfo,
+  sampleUseInfo,
 };

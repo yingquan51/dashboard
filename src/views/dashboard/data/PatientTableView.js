@@ -13,7 +13,6 @@ import { getColumnCells } from "./columns/util";
 function PatientTableView() {
   // const data = useMemo(() => dataTableData.rows, [dataTableData]);
   const [data, setData] = useState([]);
-  const [total, setTotal] = useState(0);
   const sheet = allTables[allSheetNames[0]];
   const table = sheet[Object.keys(sheet)[0]];
   const [columns, setColumns] = useState(getColumnCells(table));
@@ -31,7 +30,6 @@ function PatientTableView() {
       console.log(response);
       const { data, total } = response.data;
       setData(data);
-      setTotal(total);
     });
   }, []);
 
@@ -39,7 +37,7 @@ function PatientTableView() {
     <DashboardLayout>
       <DashboardNavbar />
       <SoftBox my={3}>
-        {TableCard("病人基本信息", columns, data, total)}
+        {TableCard("病人基本信息", columns, data)}
       </SoftBox>
     </DashboardLayout>
   );
