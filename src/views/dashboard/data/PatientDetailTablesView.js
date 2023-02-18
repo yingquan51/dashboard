@@ -12,19 +12,20 @@ import ListItemButton from "@mui/material/ListItemButton";
 
 function PatientDetailTablesView() {
   const [data, setData] = useState([]);
-  const [patientId, setPatientId] = useState(1001);
+  const [patientId, setPatientId] = useState(5);
+  const [patientZyId, setPatientZyId] = useState(657);
   const [contents, setContents] = useState([]);
 
   useEffect(() => {
     axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
     axios({
       method: "GET",
-      url: "/patient/info",
+      url: "/patient/zyinfo",
       headers: {
         "x-session-token": localStorage.getItem("token"),
       },
       params: {
-        "id": patientId,
+        "zyid": patientZyId,
       },
     }).then(response => {
       console.log(response);
@@ -40,17 +41,27 @@ function PatientDetailTablesView() {
           const fields = sheet[tableName]["fields"];
           const columns = sheet[tableName]["columns"];
           const tableData = [];
-          for (let i = 0; i < Math.min(fields.length, columns.length); i++) {
-            tableData[i] = {
-              column: columns[i],
-              row: ((data || [])[name] || [])[fields[i]] || "",
-            };
+          let curTableData = (data || [])[name];  // 当前表格数据，可能包含多张表格的数据，所以接下来需要遍历
+
+          if (!Array.isArray(curTableData)) {
+            curTableData = [curTableData]
           }
-          content.push(
-            <ListItemButton sx={{ pl: 4 }} key={index}>
-              {FormTableCard({ name: tableName, message: name, data: tableData })}
-            </ListItemButton>
-          );
+
+          curTableData.map((v, i) => {
+            for (let i = 0; i < Math.min(fields.length, columns.length); i++) {
+              tableData[i] = {
+                column: columns[i],
+                row: (v || [])[fields[i]] || "",
+              };
+            }
+            content.push(
+              <ListItemButton sx={{ pl: 4 }} key={index}>
+                {FormTableCard({ name: tableName, message: name, data: tableData })}
+              </ListItemButton>,
+            );
+          });
+
+
         });
         contents.push(<List component="div" disablePadding>{content}</List>);
       });

@@ -1,7 +1,7 @@
 const allTables = {
   "一、患者基本信息": {
     "患者基本信息": {
-      name: "patient",
+      name: "patient_info",
       fields: ["name", "sex", "age", "zyid", "marital_status", "nz", "job", "jg", "addr", "fbDate", "ryDate", "phone", "cert_id", "birthday", "weight", "tall", "bmi"],
       columns: ["姓名", "性别", "初诊年龄", "住院号", "婚姻状况", "民族", "职业", "籍贯", "现住址", "入院日期", "发现日期", "联系电话", "身份证号", "出生日期", "体重", "身高", "BMI"],
     },
@@ -29,7 +29,7 @@ const allTables = {
       fields: ["rxlxjbs", "grxjb", "xtxjb", "sss", "exzl"],
       columns: ["乳腺良性疾病史", "感染性疾病", "是否有系统疾病", "是否有手术史", "是否有恶性肿瘤既往史"],
     },
-    "家族史": {
+    "家族史": {  // tuple
       name: "family_history",
       fields: ["xqs", "rxa", "lca", "wxzl", "qtwxzl"],
       columns: ["x级亲属", "是否有恶性肿瘤家族史", "乳腺癌家族史", "卵巢癌家族史", "其他恶性肿瘤家族史"],
@@ -45,8 +45,7 @@ const allTables = {
   "五、手术及病理信息": {
     "手术及病理信息": {
       name: "surgical_pathological_info",
-      // ***
-      fields: ["id", "zyid", "ssrq", "ssfs", "sfbr", "sfzz", "ywlbqsfs", "shdblh", "bzsl", "ryzwdx", "blxfq", "zzxfj", "bllx", "blxjtms", "jzznqrlbxb", "brsskjazz", "brssbbzdd", "brssbbbqzdd", "hlfy", "lbjqk", "ywlbzs", "yxywlbzs", "er", "pr", "her2", "ki67", "p53", "lbxgqf", "lbgbs", "hfc", "hfr"],
+      fields: ["ssrq", "ssfs", "sfbr", "sfzz", "ywlbqsfs", "shdblh", "bzsl", "ryzwdx", "blxfq", "zzxfj", "bllx", "blxjtms", "jzznqrlbxb", "brsskjazz", "brssbbzdd", "brssbbbqzdd", "hlfy", "lbjqk", "ywlbzs", "yxywlbzs", "er", "pr", "her2", "ki67", "p53", "lbxgqf", "lbgbs", "hfc", "hfr"],
       columns: ["手术日期", "手术方式", "是否保乳", "是否再造", "腋窝淋巴结清扫方式", "术后大病理号", "病灶数量", "肉眼肿物大小", "病理学分期", "病理类型", "病理具体描述", "组织学分级", "淋巴血管侵犯与否", "淋巴管癌栓", "间质内浸润淋巴细胞", "化疗反应", "保乳手术标本周断端是否可见癌组织", "保乳手术标本周断端", "保乳手术标本补切周断端", "淋巴结情况", "腋窝淋巴结总数", "阳性腋窝淋巴结数", "ER", "PR", "HER2", "Ki67", "P53", "HER2-FISH COPY数", "HER2-FISH RATIO"],
     },
   },
@@ -59,30 +58,20 @@ const allTables = {
   },
   "七、复发和随访信息": {
     "记录者信息": {
-      name: "  ",
+      name: "recorder_information",
       fields: ["sclrr", "sclrsj", "mcsfr", "mcsfsj"],
       columns: ["首次录入人", "首次录入时间", "末次随访人", "末次随访时间"],
     },
-    "首次复发信息": {
+    "复发信息": {  // tuple
       name: "relapse_information",
       //***
-      fields: ["scffbw", "scffrq", "scffqzsd", "scffbzblxx", "scffbzymzh", "scffhzl", "scffxgpj"],
-      columns: ["首次复发部位", "首次复发日期", "首次复发确诊手段", "首次复发病灶病理信息", "首次复发病灶免疫组化", "首次复发后治疗", "首次复发后治疗效果评价"],
+      fields: ["djcff", "ffbw", "ffrq", "ffqzsd", "ffbzblxx", "ffbzymzh", "ffhzl", "ffxgpj"],
+      columns: ["第几次复发", "复发部位", "复发日期", "复发确诊手段", "复发病灶病理信息", "复发病灶免疫组化", "复发后治疗", "复发后治疗效果评价"],
     },
-    "二次复发信息": {
-      name: "secondry_relapse",
-      fields: ["ecffbw", "ecffrq", "ecffqzsd", "ecffbzblxx", "ecffbzmyzh", "ecffhzl", "ecffhzlxgpj"],
-      columns: [],
-    },
-    "首次远处转移信息": {
+    "远处转移信息": {  // tuple
       name: "recurrent_distant_metastasis",
-      fields: ["ffxxbh", "zycs", "yzzybw", "yczyrq", "yczyzl", "yczyzlxgpj"],
-      columns: ["首次远处转移部位", "首次远处转移日期", "首次远处转移治疗", "首次远处转移治疗效果评价"],
-    },
-    "二次远处转移信息": {
-      name: "recurrent_distant_metastasis2",
-      fields: [],
-      columns: [],
+      fields: ["djczy", "yzzybw", "yczyrq", "yczyzl", "yczyzlxgpj"],
+      columns: ["第几次转移", "远处转移部位", "远处转移日期", "远处转移治疗", "远处转移治疗"],
     },
     "随访信息": {
       name: "patient_follow",
@@ -91,18 +80,8 @@ const allTables = {
     },
   },
   "八、其他数据信息": {
-    "21基因信息": {
+    "基因信息": {  // tuple(21基因信息,  70基因信息, BRCA基因检测)
       name: "gene_detection",
-      fields: ["jyjclx", "jcsj", "yjbh", "jcry", "bbwz", "bz", "jtjcxq"],
-      columns: ["基因检测类型", "检测时间", "研究编号", "检测人员", "标本位置", "备注", "具体详情"],
-    },
-    "70基因信息": {
-      name: "gene_detection2",
-      fields: ["jyjclx", "jcsj", "yjbh", "jcry", "bbwz", "bz", "jtjcxq"],
-      columns: ["基因检测类型", "检测时间", "研究编号", "检测人员", "标本位置", "备注", "具体详情"],
-    },
-    "BRCA基因检测": {
-      name: "gene_detection3",
       fields: ["jyjclx", "jcsj", "yjbh", "jcry", "bbwz", "bz", "jtjcxq"],
       columns: ["基因检测类型", "检测时间", "研究编号", "检测人员", "标本位置", "备注", "具体详情"],
     },
@@ -111,35 +90,27 @@ const allTables = {
       fields: ["bblx", "cxsjd", "cjr", "bz", "yt", "cfbh", "qybh"],
       columns: ["标本类型", "采血时间点", "采血日期", "采集人", "备注", "用途", "存放编号", "取用编号"],
     },
-    "外周血标本采样存放信息": {
-      name: "sample_store_info",
-      fields: [],
-      columns: ["标本编码", "标本量", "标本盒编码", "标本存放位置"],
-    },
-    "外周血标本采样取用信息": {
-      name: "sample_use_info",
-      fields: [],
-      columns: ["是否取用", "取用日期", "取用人", "用途", "备注"],
-    },
     "复发转移灶标本采样基本情况": {
       name: "sampling_recurrence_metastasis_specimens",
       fields: ["glbz", "cyrq", "ytbz", "qtyt", "cjr", "bblx", "bbxz", "cfbh", "qybh"],
       columns: ["关联病灶", "采样日期", "用途标识", "其他用途（填写）", "采集人", "标本类型", "标本性质", "存放编号", "取用编号"],
     },
-    "复发转移灶标本采样存放信息": {
-      name: "sample_store_info2",
-      fields: [],
-      columns: ["标本编码", "标本量", "标本盒编码", "标本存放位置"],
-    },
-    "复发转移灶标本采样取用信息": {
-      name: "sample_use_info2",
-      fields: [],
-      columns: ["是否取用", "取用日期", "取用人", "用途", "备注"],
-    },
   },
 };
 
-const allTableNames = ['患者基本信息', '婚育史', '月经史', '个人史', '既往史', '家族史', '患者临床特征', '手术信息', '病理信息', '术后辅助治疗', '记录者信息', '首次复发信息', '二次复发信息', '首次远处转移信息', '二次远处转移信息', '随访信息', '21基因信息', '70基因信息', 'BRCA基因检测', '外周血标本采样采集信息', '外周血标本采样存放信息', '外周血标本采样取用信息', '复发转移灶标本采样基本情况', '复发转移灶标本采样存放信息', '复发转移灶标本采样取用信息'];
+const sampleStoreInfo = {
+  name: "sample_store_info",
+  fields: ["cfid", "ybid", "ybnum", "ybhbh", "ybcfwz"],
+  columns: ["存放编号", "标本编号", "标本量", "标本盒编码", "标本存放位置"],
+};
+
+const sampleUseInfo = {
+  name: "sample_use_info",
+  fields: ["qyid", "ybid", "qyrq", "qyr", "yt", "bz"],
+  columns: ["取用编号", "标本编号", "取用日期", "取用人", "用途", "备注"],
+};
+
+const allTableNames = ["患者基本信息", "婚育史", "月经史", "个人史", "既往史", "家族史", "患者临床特征", "手术信息", "病理信息", "术后辅助治疗", "记录者信息", "首次复发信息", "二次复发信息", "首次远处转移信息", "二次远处转移信息", "随访信息", "21基因信息", "70基因信息", "BRCA基因检测", "外周血标本采样采集信息", "外周血标本采样存放信息", "外周血标本采样取用信息", "复发转移灶标本采样基本情况", "复发转移灶标本采样存放信息", "复发转移灶标本采样取用信息"];
 
 // 有个表名未确定
 const allTableEnglishNames = ["patient", "patient_marry_history", "patient_menstruation_history", "patient_history", "previous_history", "family_history", "clinical_feature", "surgical_information", "surgical_pathological_info", "postoperative_treatment", "  ", "relapse_information", "relapse_information2", "recurrent_distant_metastasis", "recurrent_distant_metastasis2", "patient_follow", "gene_detection", "gene_detection2", "gene_detection3", "peripheral_blood_sample_sampling", "sample_store_info", "sample_use_info", "sampling_recurrence_metastasis_specimens", "sample_store_info2", "sample_use_info2"];
@@ -150,5 +121,5 @@ export {
   allTables,
   allSheetNames,
   allTableNames,
-  allTableEnglishNames
+  allTableEnglishNames,
 };
