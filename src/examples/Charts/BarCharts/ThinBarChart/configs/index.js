@@ -30,7 +30,7 @@ function configs(color, labels, datasets) {
           borderSkipped: false,
           backgroundColor: colors[color] ? colors[color].main : colors.dark.main,
           data: datasets.data,
-          maxBarThickness: 6,
+          maxBarThickness: 20,
         },
       ],
     },

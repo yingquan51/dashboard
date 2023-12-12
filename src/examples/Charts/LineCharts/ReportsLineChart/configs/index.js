@@ -1,10 +1,10 @@
 /**
 =========================================================
-* Soft UI Dashboard PRO React - v4.0.0
+* Material Dashboard 2 React - v2.1.0
 =========================================================
 
-* Product Page: https://material-ui.com/store/items/soft-ui-pro-dashboard/
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Product Page: https://www.creative-tim.com/product/nextjs-material-dashboard-pro
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
 
 Coded by www.creative-tim.com
 
@@ -13,62 +13,77 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// Soft UI Dashboard PRO React base styles
-import typography from "assets/theme/base/typography";
-
-
 function configs(labels, datasets) {
   return {
     data: {
       labels,
-      datasets: [...datasets],
+      datasets: [
+        {
+          label: datasets.label,
+          tension: 0,
+          pointRadius: 5,
+          pointBorderColor: "transparent",
+          pointBackgroundColor: "rgba(255, 255, 255, .8)",
+          borderColor: "rgba(255, 255, 255, .8)",
+          borderWidth: 4,
+          backgroundColor: "transparent",
+          fill: true,
+          data: datasets.data,
+          maxBarThickness: 6,
+        },
+      ],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: true,
+          display: false,
         },
+      },
+      interaction: {
+        intersect: false,
+        mode: "index",
       },
       scales: {
         y: {
-          
           grid: {
             drawBorder: false,
             display: true,
             drawOnChartArea: true,
             drawTicks: false,
-            borderDash: [8, 8],
-
+            borderDash: [5, 5],
+            color: "rgba(255, 255, 255, .2)",
           },
           ticks: {
             display: true,
+            color: "#f8f9fa",
             padding: 10,
-            color: "#141727",
             font: {
               size: 14,
-              family: typography.fontFamily,
+              weight: 300,
+              family: "Roboto",
               style: "normal",
               lineHeight: 2,
             },
           },
         },
         x: {
-          
           grid: {
             drawBorder: false,
             display: false,
-            drawOnChartArea: true,
-            drawTicks: true,
+            drawOnChartArea: false,
+            drawTicks: false,
+            borderDash: [5, 5],
           },
           ticks: {
             display: true,
-            color: "#141727",
+            color: "#f8f9fa",
             padding: 10,
             font: {
               size: 14,
-              family: typography.fontFamily,
+              weight: 300,
+              family: "Roboto",
               style: "normal",
               lineHeight: 2,
             },

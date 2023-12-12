@@ -24,7 +24,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // NewUser page components
-import FormField from "../FormField";
+import {FormField} from "../FormField";
 
 function UserInfo({ formData }) {
   const { formField, values, errors, touched } = formData;

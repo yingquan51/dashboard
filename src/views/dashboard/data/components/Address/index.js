@@ -29,7 +29,7 @@ import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
 
 // NewUser page components
-import FormField from "../FormField";
+import {FormField} from "../FormField";
 
 function Address({ formData }) {
   const [state, setState] = useState("...");

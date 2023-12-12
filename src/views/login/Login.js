@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -38,10 +38,10 @@ function Basic() {
         "admin": admin,
         "password": password
       }
-    }).then(response=>{
+    }).then(response => {
       // console.log(response.data)
       if (response.data.status && response.data.status === "正常") {
-        Swal.fire("Sign In Success", "", "success");  // "await" not allowed
+        Swal.fire("登录成功", "", "success");  // "await" not allowed
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("tokenExpiredTime", new Date().getTime() + response.data.expire * 60 * 1000);
         console.log(localStorage.getItem("tokenExpiredTime"));
@@ -53,8 +53,8 @@ function Basic() {
         // navigate("/data/table");
         window.location.reload();
       }
-      else{
-        Swal.fire("Sign In Fail", "No such User or Wrong password", "warning");
+      else {
+        Swal.fire("登陆失败", "用户名或密码错误", "warning");
       }
     })
   }
@@ -81,10 +81,10 @@ function Basic() {
         <SoftBox p={3}>
           <SoftBox component="form" role="form">
             <SoftBox mb={2}>
-              <SoftInput type="text" placeholder="Account ID" value={admin} onChange={(e)=>{setAdmin(e.target.value)}}/>
+              <SoftInput type="text" placeholder="Account ID" value={admin} onChange={(e) => { setAdmin(e.target.value) }} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="password" placeholder="PassWord" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
+              <SoftInput type="password" placeholder="PassWord" value={password} onChange={(e) => { setPassword(e.target.value) }} />
             </SoftBox>
             <SoftBox display="flex" alignItems="center">
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />

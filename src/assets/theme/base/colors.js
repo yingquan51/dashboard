@@ -83,6 +83,109 @@ const colors = {
     main: "#344767",
     focus: "#344767",
   },
+  orange: {
+    main: "#FF8C00",
+    focus: "#FF8C00",
+
+  },
+  purple: {
+    main: "#7B68EE",
+    focus: "#7B68EE",
+
+  },
+  pink: {
+    main: "#FF69B4",
+    fcous: "#FF69B4",
+  },
+  green: {
+    main: "#4A8273",
+    focus: "#4A8273",
+  },
+  darkgreen: {
+    main: "#006400",
+    focus:"#006400",
+  },
+  blue: {
+    main: "#00CED1",
+    focus:"#00CED1",
+  },
+  darkblue: {
+    main: "#00008B",
+    focus: "#00008B",
+  },
+  rose: {
+    main: "#FFE4E1",
+    focus: "#FFE4E1",
+  },
+  popcorn: {
+    main: "#FFF8DC",
+    focus: "#FFF8DC",
+  },
+  wheat: {
+    main: "#F5DEB3",
+    focus:"#F5DEB3",
+  },
+  brown: {
+    main: "#800000",
+    fcous: "#800000",
+  },
+  cadetblue: {
+    main: "#5F9EA0",
+    focus:"#5F9EA0",
+  },
+  olivedrab: {
+    main: "#6B8E23",
+    focus:"#6B8E23",
+  },
+  lightsalmon: {
+    main: "#FFA07A",
+    focus:"#FFA07A",
+  },
+  gold: {
+    main: "#FFD700",
+    focus:"#FFD700",
+  },
+  goldenrod: {
+    main: "#DAA520",
+    focus:"#DAA520",
+  },
+  darkgoldenrod: {
+    main: "#B8860B",
+    focus:"#B8860B",
+  },
+  olive: {
+    main: "#808000",
+    focus:"#808000",
+  },
+  bluet: {
+    main: "#6495ED",
+    fcous:"#6495ED",
+  },
+  india: {
+    main: "#CD5C5C",
+    focus:"#CD5C5C",
+  },
+  block: {
+    main: "#B22222",
+    focus:"#B22222",
+  },
+  darkred: {
+    main: "#8B0000",
+    focus:"#8B0000",
+  },
+  lightorange: {
+    main: "#FF9966",
+    focus:"#FF9966",
+  },
+  lightred: {
+    main: "#FF6666",
+    focus:"#FF6666",
+  },
+  lightpink: {
+    main: "#FFCCCC",
+    focus:"#FFCCCC",
+  },
+
 
   grey: {
     100: "#f8f9fa",
@@ -290,6 +393,7 @@ const colors = {
       background: "#8097bf",
       text: "#1e2e4a",
     },
+
   },
 
   inputColors: {

@@ -60,12 +60,6 @@ function AllColumnsView() {
           });
         })
       }
-      <SoftBox my={3}>
-        {TableCard("存放信息", columns, getRows(sampleStoreInfo["fields"], sampleStoreInfo["columns"]))}
-      </SoftBox>
-      <SoftBox my={3}>
-        {TableCard("取用信息", columns, getRows(sampleUseInfo["fields"], sampleUseInfo["columns"]))}
-      </SoftBox>
     </DashboardLayout>
   )
     ;

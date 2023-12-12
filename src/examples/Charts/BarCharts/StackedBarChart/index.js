@@ -28,13 +28,14 @@ import Card from "@mui/material/Card";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
-// VerticalBarChart configurations
-import configs from "examples/Charts/BarCharts/VerticalBarChart/configs";
+// StackedBarChart configurations
+import configs from "examples/Charts/BarCharts/StackedBarChart/configs";
 
 // Soft UI Dashboard PRO React base styles
 import colors from "assets/theme/base/colors";
 
-function VerticalBarChart({ title, description, height, chart }) {
+
+function StackedBarChart({ title, description, height, chart }) {
   const chartDatasets = chart.datasets
     ? chart.datasets.map((dataset) => ({
         ...dataset,
@@ -82,19 +83,19 @@ function VerticalBarChart({ title, description, height, chart }) {
   return title || description ? <Card>{renderChart}</Card> : renderChart;
 }
 
-// Setting default values for the props of VerticalBarChart
-VerticalBarChart.defaultProps = {
+// Setting default values for the props of StackedBarChart
+StackedBarChart.defaultProps = {
   title: "",
   description: "",
   height: "19.125rem",
 };
 
-// Typechecking props for the VerticalBarChart
-VerticalBarChart.propTypes = {
+// Typechecking props for the StackedBarChart
+StackedBarChart.propTypes = {
   title: PropTypes.string,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   chart: PropTypes.objectOf(PropTypes.array).isRequired,
 };
 
-export default VerticalBarChart;
+export default StackedBarChart;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
@@ -8,20 +8,21 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { Card } from "@mui/material";
+import {Card} from "@mui/material";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import Grid from "@mui/material/Grid";
 import SoftBox from "../../../../components/SoftBox";
+import SoftTypography from "../../../../components/SoftTypography";
 
 /**
  * 列表集合组件，每张列表都可以折叠
- * @param names 表名
+ * @param tableNames 表名
  * @param contents 表格
  * @returns {JSX.Element}
  * @constructor
  */
-export default function CollapseTables(names, contents) {
-  const [len, setLen] = useState(names.length);
+export default function CollapseTables(name, tableNames, contents) {
+  const [len, setLen] = useState(tableNames.length);
   const [opens, setOpens] = useState(Array(len).fill(false));
 
   const handleClick = (index) => {
@@ -31,13 +32,13 @@ export default function CollapseTables(names, contents) {
 
   const getItem = (index, name, content) => {
     return (
-      <Card key={index}>
+      <Card key={index} sx={{mb: 0.5}}>
         <ListItemButton onClick={() => handleClick(index)}>
           <ListItemIcon>
-            <TableChartIcon />
+            <TableChartIcon/>
           </ListItemIcon>
-          <ListItemText primary={name} />
-          {opens[index] ? <ExpandLess /> : <ExpandMore />}
+          <ListItemText primary={name}/>
+          {opens[index] ? <ExpandLess/> : <ExpandMore/>}
         </ListItemButton>
         <Collapse in={opens[index]} timeout="auto" unmountOnExit>
           {content}
@@ -47,19 +48,20 @@ export default function CollapseTables(names, contents) {
   };
 
   return (
-    <Grid container justifyContent="center" sx={{ height: "100%" }}>
+    <Grid container justifyContent="center" sx={{height: "100%"}}>
       <Grid item xs={12} lg={8}>
+        <Grid container justifyContent="center" mt={2} sx={{mb: 3}}>
+          <SoftTypography variant="h3" fontWeight="bold">
+            {name}
+          </SoftTypography>
+        </Grid>
         <List
           // sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          sx={{ width: "95%" }}
+          sx={{width: "95%"}}
           component="nav"
           aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              病人详情信息
-            </ListSubheader>
-          }>
-          {opens.map((value, index) => getItem(index, names[index], contents[index]))}
+        >
+          {opens.map((value, index) => getItem(index, tableNames[index], contents[index]))}
         </List>
       </Grid>
     </Grid>

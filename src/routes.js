@@ -44,30 +44,26 @@ const routes = [
         route: "/data/allColumns"
       },
       {
-        name: "病人信息",
+        name: "病人数据概览",
         key: "table",
         route: "/data/patientTable"
       },
       {
-        name: "病人年龄分布",
-        key: "pieChartTable",
-        route: "/data/pieChartTable"
-      },
-      {
-        name: "病人详细信息",
+        name: "病人详细资料",
         key: "patientDetailTables",
         route: "/data/patientDetailTables"
       },
       {
-        name: "上传数据",
-        key: "upload",
-        route: "/data/upload"
+        name: "病人数据录入",
+        key: "patientUploadTable",
+        route: "/data/patientUploadTable"
       },
       {
-        name: "Test",
-        key: "test",
-        route: "/data/test"
+        name: "数据可视化",
+        key: "pieChartTable",
+        route: "/data/pieChartTable"
       },
+
     ]
   }
 ];

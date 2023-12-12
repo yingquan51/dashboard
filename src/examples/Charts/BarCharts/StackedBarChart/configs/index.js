@@ -33,7 +33,7 @@ function configs(labels, datasets) {
       },
       scales: {
         y: {
-          
+          stacked:true,
           grid: {
             drawBorder: false,
             display: true,
@@ -55,7 +55,7 @@ function configs(labels, datasets) {
           },
         },
         x: {
-          
+          stacked: true,
           grid: {
             drawBorder: false,
             display: false,

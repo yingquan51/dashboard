@@ -26,7 +26,8 @@ function configs(labels, datasets) {
     const keys = Object.keys(obj);
     // const random = keys.length * Math.random() << 0;
     const random = parseInt(keys.length * Math.random(), 0);
-    console.log(random);
+    //console.log(random);
+    //console.log("color:", obj[keys[random]].state);
     return obj[keys[random]].state;
   };
 

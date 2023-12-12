@@ -13,17 +13,26 @@ import TableBody from "@mui/material/TableBody";
 import DataTableBodyCell from "../../../../examples/Tables/DataTable/DataTableBodyCell";
 import Pagination from "@mui/material/Pagination";
 import Grid from "@mui/material/Grid";
+import SoftButton from "../../../../components/SoftButton";
+import { Icon } from "@mui/material";
+import ImportExcelButton from "./ImportExcelButton";
+import PatientDetailTablesView from "../PatientDetailTablesView";
+
+import { useNavigate } from 'react-router-dom';
+
 
 /**
  *
  * @param columns 列名
- * @param data 数据
+ * @param data 数据(所有)
  * @param total 数据数量
  * @returns {JSX.Element}
  * @constructor
  */
 export default function TableCard(tableName, columns, data) {
+  
   const total = data.length;
+  const navigate = useNavigate();
   // 分页相关
   const [curPage, setCurPage] = useState(1);
 
@@ -61,6 +70,15 @@ export default function TableCard(tableName, columns, data) {
     setCurPage(value);
   };
 
+  const handleDetailPage = (bh,hx) => {
+    console.log('jump');
+    //console.log(hx)
+    //window.location.href = "/data/patientDetailTables"
+    //V5之前是history.push，V6是navigate.push，V7之后是navigate()
+    navigate('/data/patientDetailTables', { state: { bhzyid: bh, hxzyid: hx } });
+
+  };
+
   const setEntriesPerPage = ({ value }) => {
     console.log("set per page :", value);
     setPageSize(value);
@@ -88,7 +106,7 @@ export default function TableCard(tableName, columns, data) {
   return (
     <Card>
       <TableContainer sx={{ boxShadow: "none" }}>
-        <Grid container justifyContent="center" mt={2}>
+        <Grid container justifyContent="center" mt={2} >
           <SoftTypography variant="h3" fontWeight="bold">
             {tableName}
           </SoftTypography>
@@ -115,6 +133,7 @@ export default function TableCard(tableName, columns, data) {
               }}
             />
           </SoftBox>
+          {/*{ImportExcelButton()}*/}
         </SoftBox>
 
 
@@ -137,17 +156,23 @@ export default function TableCard(tableName, columns, data) {
             ))}
           </SoftBox>
           <TableBody {...getTableBodyProps()}>
+
             {page.map((row, key) => {
               prepareRow(row);
               return (
-                <TableRow key={key} {...row.getRowProps()}>
+                <TableRow key={key} {...row.getRowProps()} onDoubleClick={() => {
+                  handleDetailPage(row.cells[3]['value'], row.cells[4]['value'])
+                }}>
                   {row.cells.map((cell, key) => (
                     <DataTableBodyCell
                       key={key}
                       noBorder={noEndBorder && rows.length - 1 === key}
                       align={cell.column.align ? cell.column.align : "left"}
+
                       {...cell.getCellProps()}
                     >
+                      {/*console.log(row.cells[3]['value'])*/}
+                      {/*console.log(row.cells[4]['value'])*/}
                       {cell.render("Cell")}
                     </DataTableBodyCell>
                   ))}

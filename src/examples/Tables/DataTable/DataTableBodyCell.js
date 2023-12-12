@@ -44,6 +44,7 @@ function DataTableBodyCell({ noBorder, align, children }) {
         color="text"
         sx={{ verticalAlign: "middle" }}
       >
+        
         {children}
       </SoftBox>
     </SoftBox>

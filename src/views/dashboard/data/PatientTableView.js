@@ -5,10 +5,12 @@ import SoftBox from "components/SoftBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
-// Data\
+// Data
 import TableCard from "./components/TableCard";
 import { allSheetNames, allTables } from "./columns/allTables";
 import { getColumnCells } from "./columns/util";
+import SoftButton from "../../../components/SoftButton";
+import { Icon } from "@mui/material";
 
 function PatientTableView() {
   // const data = useMemo(() => dataTableData.rows, [dataTableData]);
