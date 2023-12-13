@@ -2977,20 +2977,20 @@ function KMLifelines_OS() {
       var i = 0;
       response.data.forEach((obj) => {
         //console.log(obj["km"])
-        if (obj["km"] !== null&&obj["timeline"]<=120) {
+        if (obj["timeline"] <= 120) {
 
           //console.log(obj['km'])
           timelines[i] = obj['timeline'];
           km[i] = obj['km'];
           i += 1;
-         
-         
+
+
         }
 
       });
-      console.log(timelines)
+
       //console.log(km)
-      
+
       setData({
         labels: timelines,
         datasets: [
@@ -3008,7 +3008,7 @@ function KMLifelines_OS() {
     <DashboardLayout>
 
       <GradientLineChart
-        title={"KM生存曲线"}
+        title={"患者总体生存率"}
         chart={data}
       >
       </GradientLineChart>
@@ -3044,7 +3044,7 @@ function KMLifelines_DFS() {
       var i = 0;
       response.data.forEach((obj) => {
         //console.log(obj)
-        if (obj["km"] !== null && obj["timeline"] <= 120) {
+        if (obj["timeline"] <= 120) {
 
           //console.log(obj['km'])
           timelines[i] = obj['timeline'];
@@ -3073,7 +3073,7 @@ function KMLifelines_DFS() {
     <DashboardLayout>
 
       <GradientLineChart
-        title={"KM生存曲线"}
+        title={"患者无病生存率"}
         chart={data}
       >
       </GradientLineChart>
@@ -3082,6 +3082,464 @@ function KMLifelines_DFS() {
 }
 
 
+function KMLifelines_BHOS() {
+
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "病后生育总体生存率",
+        data: [],
+      }
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines3",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const timelines = new Array(50).fill(0);
+      const km = new Array(50).fill(0);
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log("obj:", obj)
+        if (obj['timeline_yes'] <= 195) {
+          timelines[i] = obj['timeline_yes'];
+          km[i] = obj['km_yes'];
+          i += 1;
+        }
+      });
+      //console.log("time:",timelines)
+      setData({
+        labels: timelines,
+        datasets: [
+          {
+            label: "病后生育总体生存率",
+            data: km,
+            color: "wheat",
+          }
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <GradientLineChart
+        title={"病后生育患者总体生存率"}
+        chart={data}
+      >
+      </GradientLineChart>
+    </DashboardLayout>
+  );
+
+
+}
+
+
+function KMLifelines_NOBHOS() {
+
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "病后未生育总体生存率",
+        data: [],
+      }
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines4",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const timelines = new Array(50).fill(0);
+      const km = new Array(50).fill(0);
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log("obj:", obj)
+        if (obj['timeline_no'] <= 195) {
+          timelines[i] = obj['timeline_no'];
+          km[i] = obj['km_no'];
+          i += 1;
+        }
+      });
+      //console.log("time:", timelines)
+      setData({
+        labels: timelines,
+        datasets: [
+          {
+            label: "病后未生育总体生存率",
+            data: km,
+            color: "orange",
+          }
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <GradientLineChart
+        title={"病后未生育患者总体生存率"}
+        chart={data}
+      >
+      </GradientLineChart>
+    </DashboardLayout>
+  );
+
+
+}
+
+function KMLifelines_BHDFS() {
+
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "病后生育无病生存率",
+        data: [],
+      }
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines5",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const timelines = new Array(50).fill(0);
+      const km = new Array(50).fill(0);
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log("obj:", obj)
+        if (obj['timeline'] <= 195) {
+          timelines[i] = obj['timeline'];
+          km[i] = obj['km'];
+          i += 1;
+        }
+      });
+      //console.log("time:",timelines)
+      setData({
+        labels: timelines,
+        datasets: [
+          {
+            label: "病后生育无病生存率",
+            data: km,
+            color: "block",
+          }
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <GradientLineChart
+        title={"病后生育患者无病生存率"}
+        chart={data}
+      >
+      </GradientLineChart>
+    </DashboardLayout>
+  );
+
+
+}
+
+function KMLifelines_NOBHDFS() {
+
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "病后未生育无病生存率",
+        data: [],
+      }
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines6",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const timelines = new Array(50).fill(0);
+      const km = new Array(50).fill(0);
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log("obj:", obj)
+        if (obj['timeline'] <= 195) {
+          timelines[i] = obj['timeline'];
+          km[i] = obj['km'];
+          i += 1;
+        }
+      });
+      //console.log("time:",timelines)
+      setData({
+        labels: timelines,
+        datasets: [
+          {
+            label: "病后未生育无病生存率",
+            data: km,
+            color: "success",
+          }
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <GradientLineChart
+        title={"病后未生育患者无病生存率"}
+        chart={data}
+      >
+      </GradientLineChart>
+    </DashboardLayout>
+  );
+
+
+}
+
+
+function KMLifelines_hasbornOS() {
+
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "有生育史总体生存率",
+        data: [],
+      }
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines7",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const timelines = new Array(50).fill(0);
+      const km = new Array(50).fill(0);
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log("obj:", obj)
+        if (obj['timeline_yes'] <= 120) {
+          timelines[i] = obj['timeline_yes'];
+          km[i] = obj['km_yes'];
+          i += 1;
+        }
+      });
+      //console.log("time:",timelines)
+      setData({
+        labels: timelines,
+        datasets: [
+          {
+            label: "有生育史总体生存率",
+            data: km,
+            color: "warning",
+          }
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <GradientLineChart
+        title={"有生育史患者总体生存率"}
+        chart={data}
+      >
+      </GradientLineChart>
+    </DashboardLayout>
+  );
+
+
+}
+
+
+function KMLifelines_hasnobornOS() {
+
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "无生育史患者总体生存率",
+        data: [],
+      }
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines8",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const timelines = new Array(50).fill(0);
+      const km = new Array(50).fill(0);
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log("obj:", obj)
+        if (obj['timeline_no'] <= 120) {
+          timelines[i] = obj['timeline_no'];
+          km[i] = obj['km_no'];
+          i += 1;
+        }
+      });
+      //console.log("time:", timelines)
+      setData({
+        labels: timelines,
+        datasets: [
+          {
+            label: "无生育史患者总体生存率",
+            data: km,
+            color: "error",
+          }
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <GradientLineChart
+        title={"无生育史患者总体生存率"}
+        chart={data}
+      >
+      </GradientLineChart>
+    </DashboardLayout>
+  );
+
+
+}
+
+function KMLifelines_MoleOS() {
+  const labels = Array.from(new Array(80 + 1).keys()).slice(0)
+  const [data, setData] = useState({
+    labels: labels,
+    datasets: [
+      {
+        label: "HR+HER2+",
+        data: [],
+      },
+      {
+        label: "HR+HER2-",
+        data: [],
+      },
+      {
+        label: "HR-HER2+",
+        data: [],
+      },
+      {
+        label: "TNBC",
+        data: [],
+      }
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines9",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const km1 = new Array(50).fill(0);
+      const km2 = new Array(50).fill(0);
+      const km3 = new Array(50).fill(0);
+      const km4 = new Array(50).fill(0);
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log(obj["km"])
+        if (obj["timeline2"] <= 80) {
+
+          //console.log(obj['km'])
+          km1[i] = obj['km1'];
+          km2[i] = obj['km2'];
+          km3[i] = obj['km3'];
+          km4[i] = obj['km4'];
+          i += 1;
+        }
+
+      });
+
+      //console.log(km)
+
+      setData({
+        labels: labels,
+        datasets: [
+          {
+            label: "HR+HER2+",
+            data: km1,
+            color:"cadetblue",
+          },
+          {
+            label: "HR+HER2-",
+            data: km2,
+            color: "olivedrab",
+          },
+          {
+            label: "HR-HER2+",
+            data: km3,
+            color:"lightsalmon",
+          },
+          {
+            label: "TNBC",
+            data: km4,
+            color:"darkgoldenrod",
+          }
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <GradientLineChart
+        title={"不同分子分型患者总体生存率"}
+        chart={data}
+      >
+      </GradientLineChart>
+    </DashboardLayout>
+  );
+
+
+}
 export default function SimpleContainer() {
 
   return (
@@ -3256,22 +3714,78 @@ export default function SimpleContainer() {
           </Grid>
         </SoftBox>
 
-  
+
         <SoftBox mb={2}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={4}>
+            <Grid item xs={12} sm={6} lg={6}>
               <SurgeryAfterNeo />
             </Grid>
-            <Grid item xs={12} sm={6} lg={8}>
+            <Grid item xs={12} sm={6} lg={6}>
               <KMLifelines_OS />
             </Grid>
           </Grid>
         </SoftBox>
-        <KMLifelines_DFS />
+
+        <SoftBox mb={2}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} lg={6}>
+               <KMLifelines_DFS />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={6}>
+              <KMLifelines_MoleOS />
+            </Grid>
+          </Grid>
+        </SoftBox>
+
+        <SoftBox mb={2}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} lg={6}>
+              <KMLifelines_BHOS />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={6}>
+              <KMLifelines_BHDFS />
+            </Grid>
+          </Grid>
+        </SoftBox>
+
+        <SoftBox mb={2}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} lg={6}>
+              <KMLifelines_NOBHOS />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={6}>
+              <KMLifelines_NOBHDFS />
+            </Grid>
+          </Grid>
+        </SoftBox>
+
+        <SoftBox mb={2}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} lg={6}>
+              <KMLifelines_hasbornOS />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={6}>
+              <KMLifelines_hasnobornOS />
+            </Grid>
+          </Grid>
+        </SoftBox>
+
+       
+
        
 
        
         
+       
+
+
+    
+
+
+
+
+
+
 
 
 
