@@ -5,7 +5,7 @@ import PieChart from "../../../examples/Charts/PieChart";
 import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
 import StackedBarChart from "examples/Charts/BarCharts/StackedBarChart";
 import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
+import KMLineChart from "examples/Charts/LineCharts/KMLineChart";
 import DashboardLayout from "../../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../../examples/Navbars/DashboardNavbar";
 
@@ -2952,12 +2952,13 @@ function NewPatient() {
 }
 
 function KMLifelines_OS() {
-
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "总体生存率",
+        label: "总体生存率(n=3616)",
         data: [],
       }
     ],
@@ -2974,6 +2975,8 @@ function KMLifelines_OS() {
     }).then(response => {
       const timelines = new Array(100).fill(0);
       const km = new Array(100).fill(0);
+      var month60 = '';
+      var at_risk = '';
       var i = 0;
       response.data.forEach((obj) => {
         //console.log(obj["km"])
@@ -2983,19 +2986,25 @@ function KMLifelines_OS() {
           timelines[i] = obj['timeline'];
           km[i] = obj['km'];
           i += 1;
-
-
+          if (obj["timeline"] === 60) {
+            month60 = obj['km'] * 100;
+          }
         }
+        if (obj["timeline"] == 'at_risk') {
+          at_risk = obj['km'];
+        };
 
       });
 
       //console.log(km)
+      setMonth("n=60,生存率=" + month60 + '%')
+      setRisk("\nat risk: " + at_risk)
 
       setData({
         labels: timelines,
         datasets: [
           {
-            label: "总体生存率",
+            label: "总体生存率(n=3616)",
             data: km,
             color: "info",
           }
@@ -3007,11 +3016,12 @@ function KMLifelines_OS() {
   return (
     <DashboardLayout>
 
-      <GradientLineChart
+      <KMLineChart
         title={"患者总体生存率"}
         chart={data}
+        description={month + risk}
       >
-      </GradientLineChart>
+      </KMLineChart>
     </DashboardLayout>
   );
 
@@ -3019,12 +3029,13 @@ function KMLifelines_OS() {
 }
 
 function KMLifelines_DFS() {
-
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "无病生存率",
+        label: "无病生存率(n=3616)",
         data: [],
       }
     ],
@@ -3042,6 +3053,8 @@ function KMLifelines_DFS() {
       const timelines = new Array(100).fill(0);
       const km = new Array(100).fill(0);
       var i = 0;
+      var month60 = '';
+      var at_risk = '';
       response.data.forEach((obj) => {
         //console.log(obj)
         if (obj["timeline"] <= 120) {
@@ -3050,17 +3063,24 @@ function KMLifelines_DFS() {
           timelines[i] = obj['timeline'];
           km[i] = obj['km'];
           i += 1;
+          if (obj["timeline"] === 60) {
+            month60 = obj['km'] * 100;
+          }
         }
+        if (obj["timeline"] == 'at_risk') {
+          at_risk = obj['km'];
+        };
 
       });
       //console.log(timelines)
       //console.log(km)
-
+      setMonth("n=60,生存率=" + month60 + '%')
+      setRisk("\nat risk: " + at_risk)
       setData({
         labels: timelines,
         datasets: [
           {
-            label: "无病生存率",
+            label: "无病生存率(n=3616)",
             data: km,
             color: "green",
           }
@@ -3072,23 +3092,30 @@ function KMLifelines_DFS() {
   return (
     <DashboardLayout>
 
-      <GradientLineChart
+      <KMLineChart
         title={"患者无病生存率"}
         chart={data}
+        description={month + risk}
       >
-      </GradientLineChart>
+      </KMLineChart>
     </DashboardLayout>
   );
 }
 
 
 function KMLifelines_BHOS() {
-
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
+  const [cox, setCox] = useState('')
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "病后生育总体生存率",
+        label: "病后生育总体生存率(n=91)",
+        data: [],
+      },
+      {
+        label: "病后未生育总体生存率(n=3525)",
         data: [],
       }
     ],
@@ -3103,25 +3130,51 @@ function KMLifelines_BHOS() {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
-      const timelines = new Array(50).fill(0);
-      const km = new Array(50).fill(0);
+      const timelines = new Array(5).fill(0);
+      const km = new Array(5).fill(0);
+      const km1 = new Array(5).fill(0);
+      var month = '';
+      var at_risk = '';
+      var cph = '';
       var i = 0;
       response.data.forEach((obj) => {
         //console.log("obj:", obj)
-        if (obj['timeline_yes'] <= 195) {
-          timelines[i] = obj['timeline_yes'];
+        if (obj['timeline'] <= 195) {
+          //console.log(obj['timeline_yes'])
+          timelines[i] = obj['timeline'];
           km[i] = obj['km_yes'];
+          km1[i] = obj['km_no'];
           i += 1;
+          if (obj["timeline"] === 60) {
+            month = "n=60,病后生育生存率为" + obj['km_yes'] * 100 + "%";
+            month += '\nn=60,病后未生育生存率为' + obj['km_no'] * 100 + '%';
+          }
+        }
+        if (obj["timeline"] == 'at_risk1') {
+          at_risk = "with:" + obj['km_yes'];
+        };
+        if (obj["timeline"] == 'at_risk2') {
+          at_risk += "\nwithout:" + obj['km_yes'];
+        };
+        if (obj['timeline'] == 'cox') {
+          cph = obj['km_yes'];
         }
       });
-      //console.log("time:",timelines)
+      setMonth(month)
+      setRisk("\nat risk: " + at_risk)
+      setCox("\n" + cph);
       setData({
         labels: timelines,
         datasets: [
           {
-            label: "病后生育总体生存率",
+            label: "病后生育总体生存率(n=91)",
             data: km,
             color: "wheat",
+          },
+          {
+            label: "病后未生育总体生存率(n=3525)",
+            data: km1,
+            color: "orange",
           }
         ],
       });
@@ -3131,11 +3184,12 @@ function KMLifelines_BHOS() {
   return (
     <DashboardLayout>
 
-      <GradientLineChart
-        title={"病后生育患者总体生存率"}
+      <KMLineChart
+        title={"病后患者生育与否总体生存率对比"}
         chart={data}
+        description={month + risk + cox}
       >
-      </GradientLineChart>
+      </KMLineChart>
     </DashboardLayout>
   );
 
@@ -3143,13 +3197,20 @@ function KMLifelines_BHOS() {
 }
 
 
-function KMLifelines_NOBHOS() {
 
+function KMLifelines_BHDFS() {
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
+  const [cox, setCox] = useState('')
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "病后未生育总体生存率",
+        label: "病后生育无病生存率(n=91)",
+        data: [],
+      },
+      {
+        label: "病后未生育无病生存率(n=3525)",
         data: [],
       }
     ],
@@ -3164,25 +3225,51 @@ function KMLifelines_NOBHOS() {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
-      const timelines = new Array(50).fill(0);
-      const km = new Array(50).fill(0);
+      const timelines = new Array(5).fill(0);
+      const km = new Array(5).fill(0);
+      const km1 = new Array(5).fill(0);
+      var month = '';
+      var at_risk = '';
+      var cph = '';
       var i = 0;
       response.data.forEach((obj) => {
         //console.log("obj:", obj)
-        if (obj['timeline_no'] <= 195) {
-          timelines[i] = obj['timeline_no'];
-          km[i] = obj['km_no'];
+        if (obj['timeline'] <= 195) {
+          timelines[i] = obj['timeline'];
+          km[i] = obj['km'];
+          km1[i] = obj['km1'];
           i += 1;
+          if (obj["timeline"] === 60) {
+            month = "n=60,病后生育无病生存率为" + obj['km'] * 100 + "%";
+            month += '\nn=60,病后未生育无病生存率为' + obj['km1'] * 100 + '%';
+          }
+        }
+        if (obj["timeline"] == 'at_risk1') {
+          at_risk = "with:" + obj['km'];
+        };
+        if (obj["timeline"] == 'at_risk2') {
+          at_risk += "\nwithout:" + obj['km'];
+        };
+        if (obj['timeline'] == 'cox') {
+          cph = obj['km'];
         }
       });
-      //console.log("time:", timelines)
+      //console.log("time:",timelines)
+      setMonth(month)
+      setRisk("\nat risk: " + at_risk)
+      setCox("\n" + cph);
       setData({
         labels: timelines,
         datasets: [
           {
-            label: "病后未生育总体生存率",
+            label: "病后生育无病生存率(n=91)",
             data: km,
-            color: "orange",
+            color: "block",
+          },
+          {
+            label: "病后未生育无病生存率(n=3525)",
+            data: km1,
+            color: "success",
           }
         ],
       });
@@ -3192,24 +3279,33 @@ function KMLifelines_NOBHOS() {
   return (
     <DashboardLayout>
 
-      <GradientLineChart
-        title={"病后未生育患者总体生存率"}
+      <KMLineChart
+        title={"病后患者生育与否无病生存率对比"}
         chart={data}
+        description={month + risk + cox}
       >
-      </GradientLineChart>
+      </KMLineChart>
     </DashboardLayout>
   );
 
 
 }
 
-function KMLifelines_BHDFS() {
 
+
+function KMLifelines_hasbornOS() {
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
+  const [cox, setCox] = useState('')
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "病后生育无病生存率",
+        label: "有生育史总体生存率(n=2737)",
+        data: [],
+      },
+      {
+        label: "无生育史患者总体生存率(n=819)",
         data: [],
       }
     ],
@@ -3224,146 +3320,51 @@ function KMLifelines_BHDFS() {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
-      const timelines = new Array(50).fill(0);
-      const km = new Array(50).fill(0);
+      const timelines = new Array(5).fill(0);
+      const km1 = new Array(5).fill(0);
+      const km2 = new Array(5).fill(0);//另存对齐timeline后的km数据（未生育）
+      var month = '';
+      var at_risk = '';
+      var cph = '';
       var i = 0;
       response.data.forEach((obj) => {
         //console.log("obj:", obj)
-        if (obj['timeline'] <= 195) {
+        if (obj['timeline'] <= 120) {
           timelines[i] = obj['timeline'];
-          km[i] = obj['km'];
+          km1[i] = obj['km_yes'];
+          km2[i] = obj['km_no'];
           i += 1;
-        }
-      });
-      //console.log("time:",timelines)
-      setData({
-        labels: timelines,
-        datasets: [
-          {
-            label: "病后生育无病生存率",
-            data: km,
-            color: "block",
+          if (obj["timeline"] === 60) {
+            month = "n=60,有生育史生存率为" + obj['km_yes'] * 100 + "%";
+            month += '\nn=60,没有生育史生存率为' + obj['km_no'] * 100 + '%';
           }
-        ],
-      });
-    });
-  }, []);
-
-  return (
-    <DashboardLayout>
-
-      <GradientLineChart
-        title={"病后生育患者无病生存率"}
-        chart={data}
-      >
-      </GradientLineChart>
-    </DashboardLayout>
-  );
-
-
-}
-
-function KMLifelines_NOBHDFS() {
-
-  const [data, setData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "病后未生育无病生存率",
-        data: [],
-      }
-    ],
-  });
-
-  useEffect(() => {  // 页面第一次加载时，向后端请求数据
-    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
-    axios({
-      method: "GET",
-      url: "/diagram/data/drawlifelines6",
-      headers: {
-        "x-session-token": localStorage.getItem("token"),
-      },
-    }).then(response => {
-      const timelines = new Array(50).fill(0);
-      const km = new Array(50).fill(0);
-      var i = 0;
-      response.data.forEach((obj) => {
-        //console.log("obj:", obj)
-        if (obj['timeline'] <= 195) {
-          timelines[i] = obj['timeline'];
-          km[i] = obj['km'];
-          i += 1;
+        }
+        if (obj["timeline"] == 'at_risk1') {
+          at_risk = "with:" + obj['km_yes'];
+        };
+        if (obj["timeline"] == 'at_risk2') {
+          at_risk += "\nwithout:" + obj['km_yes'];
+        };
+        if (obj['timeline'] == 'cox') {
+          cph = obj['km_yes'];
         }
       });
       //console.log("time:",timelines)
+      setMonth(month)
+      setRisk("\nat risk: " + at_risk)
+      setCox("\n" + cph);
       setData({
         labels: timelines,
         datasets: [
           {
-            label: "病后未生育无病生存率",
-            data: km,
-            color: "success",
-          }
-        ],
-      });
-    });
-  }, []);
-
-  return (
-    <DashboardLayout>
-
-      <GradientLineChart
-        title={"病后未生育患者无病生存率"}
-        chart={data}
-      >
-      </GradientLineChart>
-    </DashboardLayout>
-  );
-
-
-}
-
-
-function KMLifelines_hasbornOS() {
-
-  const [data, setData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "有生育史总体生存率",
-        data: [],
-      }
-    ],
-  });
-
-  useEffect(() => {  // 页面第一次加载时，向后端请求数据
-    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
-    axios({
-      method: "GET",
-      url: "/diagram/data/drawlifelines7",
-      headers: {
-        "x-session-token": localStorage.getItem("token"),
-      },
-    }).then(response => {
-      const timelines = new Array(50).fill(0);
-      const km = new Array(50).fill(0);
-      var i = 0;
-      response.data.forEach((obj) => {
-        //console.log("obj:", obj)
-        if (obj['timeline_yes'] <= 120) {
-          timelines[i] = obj['timeline_yes'];
-          km[i] = obj['km_yes'];
-          i += 1;
-        }
-      });
-      //console.log("time:",timelines)
-      setData({
-        labels: timelines,
-        datasets: [
-          {
-            label: "有生育史总体生存率",
-            data: km,
+            label: "有生育史总体生存率(n=2737)",
+            data: km1,
             color: "warning",
+          },
+          {
+            label: "无生育史患者总体生存率(n=819)",
+            data: km2,
+            color: "error",
           }
         ],
       });
@@ -3373,11 +3374,12 @@ function KMLifelines_hasbornOS() {
   return (
     <DashboardLayout>
 
-      <GradientLineChart
-        title={"有生育史患者总体生存率"}
+      <KMLineChart
+        title={"有无生育史患者总体生存率对比"}
         chart={data}
+        description={month + risk + cox}
       >
-      </GradientLineChart>
+      </KMLineChart>
     </DashboardLayout>
   );
 
@@ -3385,13 +3387,19 @@ function KMLifelines_hasbornOS() {
 }
 
 
-function KMLifelines_hasnobornOS() {
-
+function KMLifelines_hasbornDFS() {
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
+  const [cox, setCox] = useState('')
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "无生育史患者总体生存率",
+        label: "有生育史无病生存率(n=2737)",
+        data: [],
+      },
+      {
+        label: "无生育史患者无病生存率(n=819)",
         data: [],
       }
     ],
@@ -3406,25 +3414,51 @@ function KMLifelines_hasnobornOS() {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
-      const timelines = new Array(50).fill(0);
-      const km = new Array(50).fill(0);
+      const timelines = new Array(5).fill(0);
+      const km1 = new Array(5).fill(0);
+      const km2 = new Array(5).fill(0);//另存对齐timeline后的km数据（未生育）
+      var month = '';
+      var at_risk = '';
+      var cph = '';
       var i = 0;
       response.data.forEach((obj) => {
         //console.log("obj:", obj)
-        if (obj['timeline_no'] <= 120) {
-          timelines[i] = obj['timeline_no'];
-          km[i] = obj['km_no'];
+        if (obj['timeline'] <= 120) {
+          timelines[i] = obj['timeline'];
+          km1[i] = obj['km'];
+          km2[i] = obj['km1'];
           i += 1;
+          if (obj["timeline"] === 60) {
+            month = "n=60,有生育史生存率为" + obj['km'] * 100 + "%";
+            month += '\nn=60,没有生育史生存率为' + obj['km1'] * 100 + '%';
+          }
+        }
+        if (obj["timeline"] == 'at_risk1') {
+          at_risk = "with:" + obj['km'];
+        };
+        if (obj["timeline"] == 'at_risk2') {
+          at_risk += "\nwithout:" + obj['km'];
+        };
+        if (obj['timeline'] == 'cox') {
+          cph = obj['km'];
         }
       });
-      //console.log("time:", timelines)
+      //console.log("time:",timelines)
+      setMonth(month)
+      setRisk("\nat risk: " + at_risk)
+      setCox("\n" + cph);
       setData({
         labels: timelines,
         datasets: [
           {
-            label: "无生育史患者总体生存率",
-            data: km,
-            color: "error",
+            label: "有生育史无病生存率(n=2737)",
+            data: km1,
+            color: "green",
+          },
+          {
+            label: "无生育史患者无病生存率(n=819)",
+            data: km2,
+            color: "gold",
           }
         ],
       });
@@ -3434,11 +3468,12 @@ function KMLifelines_hasnobornOS() {
   return (
     <DashboardLayout>
 
-      <GradientLineChart
-        title={"无生育史患者总体生存率"}
+      <KMLineChart
+        title={"有无生育史患者无病生存率对比"}
         chart={data}
+        description={month + risk + cox}
       >
-      </GradientLineChart>
+      </KMLineChart>
     </DashboardLayout>
   );
 
@@ -3446,24 +3481,25 @@ function KMLifelines_hasnobornOS() {
 }
 
 function KMLifelines_MoleOS() {
-  const labels = Array.from(new Array(80 + 1).keys()).slice(0)
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
   const [data, setData] = useState({
-    labels: labels,
+    labels: [],
     datasets: [
       {
-        label: "HR+HER2+",
+        label: "HR+HER2+(n=388)",
         data: [],
       },
       {
-        label: "HR+HER2-",
+        label: "HR+HER2-(n=1859)",
         data: [],
       },
       {
-        label: "HR-HER2+",
+        label: "HR-HER2+(n=319)",
         data: [],
       },
       {
-        label: "TNBC",
+        label: "TNBC(n=689)",
         data: [],
       }
     ],
@@ -3473,54 +3509,77 @@ function KMLifelines_MoleOS() {
     axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
     axios({
       method: "GET",
-      url: "/diagram/data/drawlifelines9",
+      url: "/diagram/data/drawlifelines6",
       headers: {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
+      const timelines = new Array(30).fill(0);
       const km1 = new Array(50).fill(0);
       const km2 = new Array(50).fill(0);
       const km3 = new Array(50).fill(0);
       const km4 = new Array(50).fill(0);
+      var month = '';
+      var at_risk = '';
       var i = 0;
       response.data.forEach((obj) => {
         //console.log(obj["km"])
-        if (obj["timeline2"] <= 80) {
-
+        if (obj["timeline"] <= 80) {
           //console.log(obj['km'])
+          timelines[i] = obj["timeline"];
           km1[i] = obj['km1'];
           km2[i] = obj['km2'];
           km3[i] = obj['km3'];
           km4[i] = obj['km4'];
           i += 1;
+        };
+        if (obj["timeline"] === 60) {
+          month = "n=60,HR+HER2+生存率为" + obj['km1'] * 100 + "%";
+          month += '\nn=60,HR+HER2-生存率为' + obj['km2'] * 100 + '%';
+          month += '\nn=60,HR-HER2+生存率为' + obj['km3'] * 100 + '%';
+          month += '\nn=60,TNBC生存率为' + obj['km4'] * 100 + '%';
         }
+        if (obj["timeline"] == 'at_risk1') {
+          at_risk = "HR+HER2+:" + obj['km1'];
+        };
+        if (obj["timeline"] == 'at_risk2') {
+          at_risk += "\nHR+HER2-:" + obj['km1'];
+        };
+        if (obj["timeline"] == 'at_risk3') {
+          at_risk += "\nHR-HER2+:" + obj['km1'];
+        };
+        if (obj["timeline"] == 'at_risk4') {
+          at_risk += "\nTNBC:" + obj['km1'];
+        };
 
       });
 
       //console.log(km)
-
+      setMonth(month)
+      setRisk("\nat risk: " + at_risk)
       setData({
-        labels: labels,
+        labels: timelines,
         datasets: [
           {
-            label: "HR+HER2+",
+            label: "HR+HER2+(n=388)",
             data: km1,
-            color:"cadetblue",
+            color: "cadetblue",
           },
           {
-            label: "HR+HER2-",
+            label: "HR+HER2-(n=1859)",
             data: km2,
             color: "olivedrab",
           },
           {
-            label: "HR-HER2+",
+            label: "HR-HER2+(n=319)",
             data: km3,
-            color:"lightsalmon",
+            color: "lightsalmon",
           },
           {
-            label: "TNBC",
+            label: "TNBC(n=689)",
             data: km4,
-            color:"darkgoldenrod",
+            color: "darkgoldenrod",
+
           }
         ],
       });
@@ -3530,11 +3589,117 @@ function KMLifelines_MoleOS() {
   return (
     <DashboardLayout>
 
-      <GradientLineChart
-        title={"不同分子分型患者总体生存率"}
+      <KMLineChart
+        title={"不同分子分型患者总体生存率对比"}
         chart={data}
+        description={month + risk}
       >
-      </GradientLineChart>
+      </KMLineChart>
+    </DashboardLayout>
+  );
+
+
+}
+
+function KMLifelines_OpOS() {
+  const [month, setMonth] = useState('');
+  const [risk, setRisk] = useState('');
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Mast(n=2279)",
+        data: [],
+      },
+      {
+        label: "B.C.S.(n=782)",
+        data: [],
+      },
+      {
+        label: "R.S.(n=463)",
+        data: [],
+      },
+    ],
+  });
+
+  useEffect(() => {  // 页面第一次加载时，向后端请求数据
+    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+    axios({
+      method: "GET",
+      url: "/diagram/data/drawlifelines7",
+      headers: {
+        "x-session-token": localStorage.getItem("token"),
+      },
+    }).then(response => {
+      const timelines = new Array(50).fill(0);
+      const km1 = new Array(50).fill(0);
+      const km2 = new Array(50).fill(0);
+      const km3 = new Array(50).fill(0);
+      var month = '';
+      var at_risk = '';
+      var i = 0;
+      response.data.forEach((obj) => {
+        //console.log(obj["km"])
+        if (obj["timeline"] <= 80) {
+          //console.log(obj['km'])
+          timelines[i] = obj["timeline"];
+          km1[i] = obj['km1'];
+          km2[i] = obj['km2'];
+          km3[i] = obj['km3'];
+          i += 1;
+        };
+        if (obj["timeline"] === 60) {
+          month = "n=60,手术方式为全切，生存率为" + obj['km1'] * 100 + "%";
+          month += '\nn=60,手术方式为保乳，生存率为' + obj['km2'] * 100 + '%';
+          month += '\nn=60,手术方式为再造，生存率为' + obj['km3'] * 100 + '%';
+        }
+        if (obj["timeline"] == 'at_risk1') {
+          at_risk = "全切:" + obj['km1'];
+        };
+        if (obj["timeline"] == 'at_risk2') {
+          at_risk += "\n保乳:" + obj['km1'];
+        };
+        if (obj["timeline"] == 'at_risk3') {
+          at_risk += "\n再造:" + obj['km1'];
+        };
+
+      });
+
+      //console.log(km)
+      setMonth(month)
+      setRisk("\nat risk: " + at_risk)
+      setData({
+        labels: timelines,
+        datasets: [
+          {
+            label: "Mast(n=2279)",
+            data: km1,
+            color: "pink",
+          },
+          {
+            label: "B.C.S.(n=782)",
+            data: km2,
+            color: "purple",
+          },
+          {
+            label: "R.S.(n=463)",
+            data: km3,
+            color: "blue",
+          },
+        ],
+      });
+    });
+  }, []);
+
+  return (
+    <DashboardLayout>
+
+      <KMLineChart
+        title={"不同手术方式患者总体生存率对比"}
+        chart={data}
+        description={month + risk}
+      >
+      </KMLineChart>
     </DashboardLayout>
   );
 
@@ -3715,71 +3880,58 @@ export default function SimpleContainer() {
         </SoftBox>
 
 
-        <SoftBox mb={2}>
+        <SoftBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} sm={6} lg={4}>
               <SurgeryAfterNeo />
             </Grid>
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} sm={6} lg={4}>
               <KMLifelines_OS />
             </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <KMLifelines_DFS />
+            </Grid>
           </Grid>
         </SoftBox>
 
-        <SoftBox mb={2}>
+        <SoftBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={6}>
-               <KMLifelines_DFS />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} sm={6} lg={4}>
               <KMLifelines_MoleOS />
             </Grid>
-          </Grid>
-        </SoftBox>
-
-        <SoftBox mb={2}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} sm={6} lg={4}>
               <KMLifelines_BHOS />
             </Grid>
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} sm={6} lg={4}>
               <KMLifelines_BHDFS />
             </Grid>
           </Grid>
         </SoftBox>
 
-        <SoftBox mb={2}>
+        <SoftBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={6}>
-              <KMLifelines_NOBHOS />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={6}>
-              <KMLifelines_NOBHDFS />
-            </Grid>
-          </Grid>
-        </SoftBox>
-
-        <SoftBox mb={2}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} sm={6} lg={4}>
               <KMLifelines_hasbornOS />
             </Grid>
-            <Grid item xs={12} sm={6} lg={6}>
-              <KMLifelines_hasnobornOS />
+            <Grid item xs={12} sm={6} lg={4}>
+             <KMLifelines_hasbornDFS/>
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <KMLifelines_OpOS />
             </Grid>
           </Grid>
         </SoftBox>
 
-       
-
-       
-
-       
-        
-       
 
 
-    
+
+
+
+
+
+
+
+
 
 
 
