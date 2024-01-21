@@ -12,10 +12,10 @@ import { getColumnCells } from "./columns/util";
 import SoftButton from "../../../components/SoftButton";
 import { Icon } from "@mui/material";
 
-function PatientTableView() {
+function SampleTableView() {
   // const data = useMemo(() => dataTableData.rows, [dataTableData]);
   const [data, setData] = useState([]);
-  const sheet = allTables[allSheetNames[0]];
+  const sheet = allTables[allSheetNames[8]];
   const table = sheet[Object.keys(sheet)[0]];
   const [columns, setColumns] = useState(getColumnCells(table));
 
@@ -24,13 +24,12 @@ function PatientTableView() {
     axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
     axios({
       method: "GET",
-      url: "/api/info/get",
+      url: "/api/info/sample",
       headers: {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
       console.log(response);
-      //console.log("sheet",sheet)
       const { data, total } = response.data;
       setData(data);
     });
@@ -40,10 +39,10 @@ function PatientTableView() {
     <DashboardLayout>
       <DashboardNavbar />
       <SoftBox my={3}>
-        {TableCard("病人基本信息", columns, data)}
+        {TableCard("样本库", columns, data)}
       </SoftBox>
     </DashboardLayout>
   );
 }
 
-export default PatientTableView;
+export default SampleTableView;

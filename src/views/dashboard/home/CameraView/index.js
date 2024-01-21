@@ -64,24 +64,24 @@ function CameraView({ image, date, time, value, index }) {
               color="secondary"
               variant="contained"
               size="lg"
-              badgeContent={
-                <SoftBox display="flex" alignItems="center">
-                  <SoftBox color="error" lineHeight={0} fontSize={size.md}>
-                    <Icon>fiber_manual_record</Icon>
-                  </SoftBox>
-                  <SoftBox mb={-0.25} ml={0.25}>
-                    <SoftTypography
-                      component="span"
-                      variant="caption"
-                      color="text"
-                      fontWeight="bold"
-                      textTransform="uppercase"
-                    >
-                      recording
-                    </SoftTypography>
-                  </SoftBox>
-                </SoftBox>
-              }
+              // badgeContent={
+              //   <SoftBox display="flex" alignItems="center">
+              //     <SoftBox color="error" lineHeight={0} fontSize={size.md}>
+              //       <Icon>fiber_manual_record</Icon>
+              //     </SoftBox>
+              //     <SoftBox mb={-0.25} ml={0.25}>
+              //       <SoftTypography
+              //         component="span"
+              //         variant="caption"
+              //         color="text"
+              //         fontWeight="bold"
+              //         textTransform="uppercase"
+              //       >
+              //         recording
+              //       </SoftTypography>
+              //     </SoftBox>
+              //   </SoftBox>
+              // }
             />
           </SoftBox>
         </SoftBox>

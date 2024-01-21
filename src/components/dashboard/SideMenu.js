@@ -27,7 +27,7 @@ export default function SideMenu() {
     <Sidenav
       color={sidenavColor}
       brand={brand}
-      brandName="&nbsp;&nbsp;&nbsp;Dashboard"
+      brandName="&nbsp;&nbsp;&nbsp;主页"
       routes={routes}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}

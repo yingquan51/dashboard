@@ -35,9 +35,9 @@ import breakpoints from "assets/theme/base/breakpoints";
 import CameraView from "../CameraView";
 
 // Images
-import camera1 from "assets/images/bg-smart-home-1.jpg";
-import camera2 from "assets/images/bg-smart-home-2.jpg";
-import camera3 from "assets/images/home-decor-3.jpg";
+import hospital from "assets/images/hospital.jpg"
+import nankai from "assets/images/NKU.jpg"
+import cs from "assets/images/Computer Science.png"
 
 function Cameras() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -68,54 +68,33 @@ function Cameras() {
   const handleOpenMenu = ({ currentTarget }) => setOpenMenu(currentTarget);
   const handleCloseMenu = () => setOpenMenu(null);
 
-  const renderMenu = () => (
-    <Menu
-      anchorEl={openMenu}
-      anchorOrigin={{ vertical: "top", horizontal: "left" }}
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={Boolean(openMenu)}
-      onClose={handleCloseMenu}
-    >
-      <MenuItem onClick={handleCloseMenu}>Pause</MenuItem>
-      <MenuItem onClick={handleCloseMenu}>Stop</MenuItem>
-      <MenuItem onClick={handleCloseMenu}>Schedule</MenuItem>
-      <SoftBox component="div" bgColor="secondary" opacity={0.3} width="100%" height="1px" my={1} />
-      <MenuItem onClick={handleCloseMenu}>
-        <SoftTypography variant="inherit" color="error">
-          Remove
-        </SoftTypography>
-      </MenuItem>
-    </Menu>
-  );
+  
 
   return (
-    <Card>
+    <Card style={{
+      position: 'absolute',
+      width: "80%",
+      top: '120px',
+      left:'100px'
+}}>
       <SoftBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
-        <SoftTypography variant="h6">Cameras</SoftTypography>
-        <SoftBox display="flex" justifyContent="space-between" alignItems="center" width="60%">
+        <SoftTypography variant="h6">Switch</SoftTypography>
+        <SoftBox display="flex" justifyContent="space-between" alignItems="center" width="80%">
           <SoftBox width="90%">
             <AppBar position="static">
               <Tabs orientation={tabsOrientation} value={camera} onChange={handleSetCamera}>
-                <Tab label="Kitchen" />
-                <Tab label="Living" />
-                <Tab label="Attic" />
+                <Tab label="Hospital" />
+                <Tab label="Nankai University" />
+                {/* <Tab label="BioCenter" /> */}
               </Tabs>
             </AppBar>
           </SoftBox>
-          {renderMenu()}
-          <SoftTypography
-            color="text"
-            onClick={handleOpenMenu}
-            sx={{ lineHeight: 0, cursor: "pointer" }}
-          >
-            <Icon fontSize="default">more_vert</Icon>
-          </SoftTypography>
         </SoftBox>
       </SoftBox>
-      <SoftBox p={2} mt={1} width="100%" height="26.25rem">
-        <CameraView image={camera1} date="17.05.2021" time="4:34PM" value={camera} index={0} />
-        <CameraView image={camera2} date="17.05.2021" time="4:35PM" value={camera} index={1} />
-        <CameraView image={camera3} date="17.05.2021" time="4:57PM" value={camera} index={2} />
+      <SoftBox p={2} mt={1} width="100%" height="36.25rem">
+        <CameraView image={hospital}  value={camera} index={0} />
+        <CameraView image={nankai} value={camera} index={1} />
+        {/* <CameraView image={cs}  value={camera} index={2} /> */}
       </SoftBox>
     </Card>
   );

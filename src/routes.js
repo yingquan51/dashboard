@@ -63,6 +63,11 @@ const routes = [
         key: "pieChartTable",
         route: "/data/pieChartTable"
       },
+      {
+        name: "样本库",
+        key: "sampleTable",
+        route: "/data/sampleTable"
+      },
 
     ]
   }

@@ -11,6 +11,7 @@ import PieChartTableView from "views/dashboard/data/PieChartTableView"
 import PatientDetailTablesView from "../views/dashboard/data/PatientDetailTablesView";
 import AllColumnsView from "../views/dashboard/data/AllColumnsView";
 import PatientUploadTableView from "views/dashboard/data/PatientUploadTableView";
+import SampleTableView from "views/dashboard/data/SampleTableView";
 
 
 export default function IndexRouter() {
@@ -35,6 +36,7 @@ export default function IndexRouter() {
           <Route path="pieChartTable" element={<PieChartTableView />} />
           <Route path="patientDetailTables" element={<PatientDetailTablesView />} />
           <Route path="patientUploadTable" element={<PatientUploadTableView />} />
+          <Route path="sampleTable" element={<SampleTableView />} />
         </Route>
       </Route>
       <Route path="*" element={<Error />} />

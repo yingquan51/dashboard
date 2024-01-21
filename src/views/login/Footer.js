@@ -11,7 +11,7 @@ function Footer() {
       <Grid container justifyContent="center">
         <Grid item xs={12} lg={8} sx={{ textAlign: "center" }}>
           <SoftTypography variant="body2" color="secondary">
-            Copyright &copy; 2022 Powered By nkul.
+            Copyright &copy; 2024 Powered By Centre for Bioinformatics and Intelligent Medicine, Nankai University.
           </SoftTypography>
         </Grid>
       </Grid>
