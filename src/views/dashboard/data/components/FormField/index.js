@@ -17,13 +17,14 @@
 import PropTypes from "prop-types";
 
 // formik components
-import { ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, useField } from "formik";
 
 // Soft UI Dashboard PRO React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
 import Select from "@mui/material/Select";
+import SoftSelect from "components/SoftSelect";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -33,6 +34,7 @@ import { TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from 'dayjs';
 import { useState } from "react";
+import { RecentActorsOutlined } from "@mui/icons-material";
 
 function FormField({ label, name, ...rest }) {
   return (
@@ -57,7 +59,13 @@ function FormField({ label, name, ...rest }) {
   );
 }
 
-function SelectFormField({ label, name, items, ...rest }) {
+function SelectFormField({ label, name, items,  ...rest }) {
+  const [field, meta, helpers] = useField(name)  //用useField读取field，
+  const handleonChange = (event) => {
+    helpers.setValue(event.label) // 选项改变时触发helper.setValue
+    console.log(field.value)
+  }
+  const selectedOption = items.find(item => item.value === field.value)  // 选项值从field.value里读取
   return (
     <Box mb={1.5}>
       <SoftBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
@@ -70,11 +78,13 @@ function SelectFormField({ label, name, items, ...rest }) {
           {label}
         </SoftTypography>
       </SoftBox>
-      <Field {...rest} name={name} as={Select}>
-        {
-          items.map((v, i) => (<MenuItem value={v} key={i}>{v}</MenuItem>))
-        }
+
+      <Field {...rest} name={name} component={SoftSelect}   //component是自定义组件
+        value={selectedOption}
+        options={items.map((v) => ({ value: v, label: v }))}  //三个都是给component的参数
+        onChange={handleonChange} >
       </Field>
+      <div>{field.value}</div>
       <SoftBox mt={0.75}>
         <SoftTypography component="div" variant="caption" color="error">
           <ErrorMessage name={name} />

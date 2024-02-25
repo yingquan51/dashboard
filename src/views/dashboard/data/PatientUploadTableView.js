@@ -16,7 +16,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const handleSubmit = (api,navigate) =>
+const handleSubmit = (api, navigate) =>
   async (v) => {
     console.log(v);
     axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
@@ -42,7 +42,7 @@ const handleSubmit = (api,navigate) =>
         navigate("/data/patientUploadTable");
         // navigate("/data/table");
         //window.location.reload();
-        
+
       }
       else {
         Swal.fire("上传失败", "请检查所填信息是否正确并重新填写 ", "warning");
@@ -55,7 +55,7 @@ const handleSubmit = (api,navigate) =>
 
 
 
-const getContent = (tableData,navigate) => {
+const getContent = (tableData, navigate) => {
   const { name, api, fields, columns, validations, functions, params } = tableData.uploadParams;
   const initialValues = {}, validationsObj = {};
   fields.map((v, i) => {
@@ -75,7 +75,7 @@ const getContent = (tableData,navigate) => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit(api,navigate)}
+            onSubmit={handleSubmit(api, navigate)}
           >
             {({ values, errors, touched, isSubmitting }) => (
               <Form autoComplete="off">
@@ -98,8 +98,8 @@ const getContent = (tableData,navigate) => {
                             }
                             {
                               fields.map((v, i) => {
-                                // console.log(v);
-                                // console.log(functions[i]);
+                                //console.log(v);
+                                //console.log(functions[i]);
                                 // console.log(params[i]);
                                 return functions[i](values, errors, touched, i, columns[i], fields[i], ...params[i]);
                               })
@@ -141,7 +141,7 @@ function PatientUploadTableView() {
         const tableData = sheet[tableName];
         content.push(
           <ListItemButton sx={{ pl: 4 }} key={index}>
-            {getContent(tableData,navigate)}
+            {getContent(tableData, navigate)}
           </ListItemButton>,
         );
       });

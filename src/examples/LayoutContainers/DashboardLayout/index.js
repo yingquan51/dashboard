@@ -43,8 +43,8 @@ function DashboardLayout({ children }) {
         position: "relative",
 
         [breakpoints.up("xl")]: {
-          marginLeft: miniSidenav ? pxToRem(100) : pxToRem(200),//调整边距
-          marginRight: pxToRem(-80),
+          marginLeft: pxToRem(100),//调整边距
+          marginRight: pxToRem(0),
           transition: transitions.create(["margin-left", "margin-right"], {
             easing: transitions.easing.easeInOut,
             duration: transitions.duration.standard,

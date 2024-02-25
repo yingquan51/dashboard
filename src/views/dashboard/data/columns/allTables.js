@@ -76,11 +76,12 @@ const getSelectFormField = (values, errors, touched, index, label, name, getItem
       type={"text"}
       label={label}
       name={name}
-      items={getItems(values)}
+      items={getItems(values)}  //getItems is params[0]
       value={values[name]}
+      values={values}
       error={errors[name] && touched[name]}
       success={values[name].length > 0 && !errors[name] ? "true" : undefined}
-      disabled={disabled(values)}
+      disabled={disabled(values)}  // disabled is params[1]
       sx={disabled(values) ? { backgroundColor: "#e9ecef!important" } : {}}
     />
   </Grid>
@@ -1313,7 +1314,7 @@ const allTables = {
     "样本库": {
       name: "sample",
       fields: ["id", "gender", "age", "mzid", "zyid", "time", "seqmethod", "qclx", "qcfs", "lcfq", "tnm", "blfq", "side", "bllx", "zzxfj", "xfzzl", "xfqy", "xfzfa", "fzfx", "er", "pr", "her2", "ki67"],
-      columns: ["编号", "性别", "年龄", "门诊号", "住院号", "取标本时间", "测序方法", "取材类型", "取材方式", "临床分期", "TNM分期", "病理分期", "侧别", "病理类型", "组织学分级", "新辅助治疗", "新辅助前或后取样", "新辅助方案", "分子分型", "ER", "PR", "HER2","Ki67"],
+      columns: ["编号", "性别", "年龄", "门诊号", "住院号", "取标本时间", "测序方法", "取材类型", "取材方式", "临床分期", "TNM分期", "病理分期", "侧别", "病理类型", "组织学分级", "新辅助治疗", "新辅助前或后取样", "新辅助方案", "分子分型", "ER", "PR", "HER2", "Ki67"],
       uploadParams: {  // 用于编写上传表格代码的数据
         name: "样本库",
         api: "sample",

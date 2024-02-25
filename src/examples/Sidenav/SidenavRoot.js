@@ -21,7 +21,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
   const { palette, boxShadows, transitions, breakpoints, functions } = theme;
   const { transparentSidenav, miniSidenav } = ownerState;
 
-  const sidebarWidth = 250;
+  const sidebarWidth = 225;
   const { white, transparent } = palette;
   const { xxl } = boxShadows;
   const { pxToRem } = functions;
@@ -38,6 +38,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
       backgroundColor: transparentSidenav ? transparent.main : white.main,
       boxShadow: transparentSidenav ? "none" : xxl,
       marginBottom: transparentSidenav ? 0 : "inherit",
+      marginLeft: "0",
       left: "0",
       width: sidebarWidth,
       transform: "translateX(0)",
