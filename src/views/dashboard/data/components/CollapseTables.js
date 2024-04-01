@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
@@ -18,10 +18,11 @@ import SoftTypography from "../../../../components/SoftTypography";
  * 列表集合组件，每张列表都可以折叠
  * @param tableNames 表名
  * @param contents 表格
+ * @param idx 默认展开的索引
  * @returns {JSX.Element}
  * @constructor
  */
-export default function CollapseTables(name, tableNames, contents) {
+export default function CollapseTables(name, tableNames, contents, idx) {
   const [len, setLen] = useState(tableNames.length);
   const [opens, setOpens] = useState(Array(len).fill(false));
 
@@ -32,7 +33,7 @@ export default function CollapseTables(name, tableNames, contents) {
 
   const getItem = (index, name, content) => {
     return (
-      <Card key={index} sx={{mb: 0.5}}>
+      <Card key={index} sx={{mb: 0.5, overflow: 'visible'}}>
         <ListItemButton onClick={() => handleClick(index)}>
           <ListItemIcon>
             <TableChartIcon/>
@@ -47,11 +48,16 @@ export default function CollapseTables(name, tableNames, contents) {
     );
   };
 
+  useEffect(()=>{
+    let newOpens = opens.map((v, i) => i == idx ? true : false); // 采用route方式仅打开一个表格，其他表格都关闭
+    setOpens(newOpens);
+  }, [idx])
+
   return (
-    <Grid container justifyContent="center" sx={{height: "100%"}}>
-      <Grid item xs={12} lg={8}>
-        <Grid container justifyContent="center" mt={2} sx={{mb: 3}}>
-          <SoftTypography variant="h3" fontWeight="bold">
+    <Grid container justifyContent="center" sx={{height: "100%" }} columns={{ xs: 4, md: 8, sm:12}}>
+      <Grid item xs={12} lg={8} sm={10} >
+        <Grid container justifyContent="center" mt={0}>
+          <SoftTypography variant="h3" fontWeight="bold" mb={2}>
             {name}
           </SoftTypography>
         </Grid>

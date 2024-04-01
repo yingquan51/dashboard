@@ -27,7 +27,7 @@ export default function SideMenu() {
     <Sidenav
       color={sidenavColor}
       brand={brand}
-      brandName="&nbsp;&nbsp;&nbsp;主页"
+      brandName="&nbsp;&nbsp;&nbsp;乳腺癌数据管理中心"
       routes={routes}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}

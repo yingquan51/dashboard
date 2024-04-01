@@ -54,6 +54,11 @@ const colors = {
     focus: "#96a2b8",
   },
 
+  yellow: {
+    main: "#fea369",
+    focus: "#ef7f3e",
+  },
+
   info: {
     main: "#17c1e8",
     focus: "#3acaeb",
@@ -200,6 +205,43 @@ const colors = {
   },
 
   gradients: {
+    grey: {
+      main: "#ced4da",
+      state: "#ced4da",
+    },
+    yellow: {
+      main: "#fea369",
+      state: "#ef7f3e",
+    },
+    green: {
+      main: "#4A8273",
+      state: "#4A8273",
+    },
+    darkred: {
+      main: "#8B0000",
+      state:"#8B0000",
+    },
+    darkblue: {
+      main: "#00008B",
+      state: "#00008B",
+    },
+    rose: {
+      main: "#FFE4E1",
+      state: "#FFE4E1",
+    },
+    popcorn: {
+      main: "#FFF8DC",
+      state: "#FFF8DC",
+    },
+    wheat: {
+      main: "#F5DEB3",
+      state:"#F5DEB3",
+    },
+    olivedrab: {
+      main: "#6B8E23",
+      state:"#6B8E23",
+    },
+
     primary: {
       main: "#7928ca",
       state: "#ff0080",

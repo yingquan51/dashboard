@@ -39,7 +39,8 @@ function configs(labels, datasets) {
     );
   } else {
     // backgroundColors.push(dark.main);
-    datasets.data.forEach(() => backgroundColors.push(randomColor(gradients)));
+    datasets.data.forEach(() => backgroundColors.push('#fea369','#4d8675'));
+    console.log(randomColor(gradients))
   }
 
   return {

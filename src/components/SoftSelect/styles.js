@@ -25,8 +25,8 @@ import boxShadow from "assets/theme/functions/boxShadow";
 // @emotion/react components
 import { keyframes } from "@emotion/react";
 
-export default (selectSize, selectError, selectSuccess) => {
-  const { dark, white, text, light, inputColors, gradients, transparent } = colors;
+export default (selectSize, selectError, selectSuccess, selectDisabled) => {
+  const { dark, white, text, light, inputColors, gradients, transparent, grey } = colors;
   const { size, fontWeightRegular } = typography;
   const { borderWidth, borderRadius } = borders;
   const { inputBoxShadow, lg } = boxShadows;
@@ -35,6 +35,7 @@ export default (selectSize, selectError, selectSuccess) => {
   let borderColorFocused;
   let boxShadowValue;
   let selectSizeValue;
+  let backgroundColorValue;
 
   if (selectError) {
     borderColorValue = inputColors.error;
@@ -53,6 +54,14 @@ export default (selectSize, selectError, selectSuccess) => {
     boxShadowValue = inputBoxShadow.success;
   } else {
     boxShadowValue = boxShadow([0, 0], [0, 2], inputColors.boxShadow, 1);
+  }
+
+  if (selectDisabled){
+    backgroundColorValue = grey[200];
+    borderColorValue = inputColors.borderColor.main;
+    borderColorFocused = inputColors.borderColor.focus;
+  } else {
+    backgroundColorValue = transparent.main;
   }
 
   if (selectSize === "small") {
@@ -84,7 +93,7 @@ export default (selectSize, selectError, selectSuccess) => {
       padding: 0,
       fontSize: selectSize === "small" ? size.xs : size.sm,
       fontWeight: fontWeightRegular,
-      backgroundColor: transparent.main,
+      backgroundColor: backgroundColorValue,
       backgroundClip: "padding-box",
       border: `${borderWidth[1]} solid ${inputColors.borderColor.main}`,
       appearance: "none",
@@ -148,7 +157,7 @@ export default (selectSize, selectError, selectSuccess) => {
 
     menu: (provided) => ({
       ...provided,
-      minWidth: pxToRem(160),
+      minWidth: pxToRem(300),
       boxShadow: lg,
       padding: `${pxToRem(16)} ${pxToRem(8)}`,
       fontSize: size.sm,
@@ -168,7 +177,7 @@ export default (selectSize, selectError, selectSuccess) => {
     option: (provided, state) => ({
       ...provided,
       position: "relative",
-      minWidth: pxToRem(160),
+      minWidth: pxToRem(280),
       minHeight: "unset",
       padding: `${pxToRem(4.8)} ${pxToRem(100)} ${pxToRem(4.8)} ${pxToRem(16)}`,
       borderRadius: borderRadius.md,
@@ -207,12 +216,12 @@ export default (selectSize, selectError, selectSuccess) => {
       ...provided,
       margin: 0,
       marginRight: pxToRem(4),
-      borderRadius: borderRadius.section,
+      borderRadius: borderRadius.md,
       display: "flex",
-      alignItems: "center",
+      alignItems: "left",
       backgroundColor: gradients.dark.state,
       color: white.main,
-      padding: `${pxToRem(2)} 0 ${pxToRem(2)} ${pxToRem(4)}`,
+      padding: `${pxToRem(2)} 0 ${pxToRem(2)} ${pxToRem(5)}`,
 
       "& div:first-of-type": {
         color: white.main,

@@ -36,7 +36,7 @@ const { gradients, dark } = colors;
 
 
 function PieChartTableView() {
-  const labels = ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-99", ">=100"];
+  const labels = ["0-25", "26-30", "31-35", "36-40", "41-65", ">65"];
   const [data, setData] = useState({
     labels: labels,
     datasets: {
@@ -56,9 +56,23 @@ function PieChartTableView() {
         "x-session-token": localStorage.getItem("token"),
       },
     }).then(response => {
-      const ageCounts = new Array(11).fill(0);
+      let ageCounts = new Array(11).fill(0);
       response.data.data.forEach((obj) => {  // 统计年龄分布
-        const ageIdx = Math.min(Math.floor(obj.age / 10), 10);  // 100岁以上放在一起统计
+        let ageIdx = Math.min(Math.floor(obj.age), 10);  
+        let age = Math.floor(obj.age)
+        if(age > 0 && age <= 25){
+          ageIdx = 0
+        }else if(age>25 && age<=30){
+          ageIdx = 1
+        }else if(age>30 && age<=35) {
+          ageIdx = 2
+        }else if(age>35 && age<=40){
+          ageIdx = 3
+        }else if(age>40 && age<=65){
+          ageIdx = 4
+        }else{
+          ageIdx = 5
+        }
         ageCounts[ageIdx] = ageCounts[ageIdx] ? ageCounts[ageIdx] + 1 : 1;
       });
       // console.log(data);
@@ -3102,7 +3116,6 @@ function KMLifelines_DFS() {
   );
 }
 
-
 function KMLifelines_BHOS() {
   const [month, setMonth] = useState('');
   const [risk, setRisk] = useState('');
@@ -3195,8 +3208,6 @@ function KMLifelines_BHOS() {
 
 
 }
-
-
 
 function KMLifelines_BHDFS() {
   const [month, setMonth] = useState('');
@@ -3291,8 +3302,6 @@ function KMLifelines_BHDFS() {
 
 }
 
-
-
 function KMLifelines_hasbornOS() {
   const [month, setMonth] = useState('');
   const [risk, setRisk] = useState('');
@@ -3385,7 +3394,6 @@ function KMLifelines_hasbornOS() {
 
 
 }
-
 
 function KMLifelines_hasbornDFS() {
   const [month, setMonth] = useState('');
@@ -3702,9 +3710,8 @@ function KMLifelines_OpOS() {
       </KMLineChart>
     </DashboardLayout>
   );
-
-
 }
+
 export default function SimpleContainer() {
 
   return (

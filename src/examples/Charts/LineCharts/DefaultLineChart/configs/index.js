@@ -27,7 +27,7 @@ function configs(labels, datasets) {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: false,
+          display: true,
         },
       },
       interaction: {
@@ -40,7 +40,7 @@ function configs(labels, datasets) {
             drawBorder: false,
             display: true,
             drawOnChartArea: true,
-            drawTicks: false,
+            drawTicks: true,
             borderDash: [5, 5],
           },
           ticks: {
@@ -48,7 +48,7 @@ function configs(labels, datasets) {
             padding: 10,
             color: "#b2b9bf",
             font: {
-              size: 11,
+              size: 14,
               family: typography.fontFamily,
               style: "normal",
               lineHeight: 2,
@@ -68,7 +68,7 @@ function configs(labels, datasets) {
             color: "#b2b9bf",
             padding: 10,
             font: {
-              size: 11,
+              size: 14,
               family: typography.fontFamily,
               style: "normal",
               lineHeight: 2,

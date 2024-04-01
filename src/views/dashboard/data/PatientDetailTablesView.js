@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import Grid from "@mui/material/Grid";
 import SoftInput from "../../../components/SoftInput";
 import SoftButton from "../../../components/SoftButton";
+import Stack from "@mui/material/Stack";
 
 //导出病人信息为Excel
 import ExportJsonExcel from "js-export-excel"
@@ -37,9 +38,9 @@ function PatientDetailTablesView() {
   if (state.state !== null) {
     bh = state.state.bhzyid;
     hx = state.state.hxzyid;
-    
+
   };
-  
+
   const [data, setData] = useState([]);
   const [patientId, setPatientId] = useState(1006);
   const [patientBhZyId, setPatientBhZyId] = bh ? useState(bh) : useState(1);
@@ -137,15 +138,18 @@ function PatientDetailTablesView() {
         }
         curTableData.map((v, i) => {
           for (let i = 0; i < Math.min(fields.length, columns.length); i++) {
+            // console.log(Array.isArray((v || [])[fields[i]]) ? "Details" : "SoftInput")
             tableData[i] = {
               column: columns[i],
               row: (v || [])[fields[i]] || "",
+              component: Array.isArray((v || [])[fields[i]]) ? "Details" : "SoftInput",  // 查看表项是否是数组，如果是则要用Details来呈现
             };
           }
-          //console.log("data:", curTableData)
+          // 表头标题，如果有多张表格数据，则给表头加编号
+          let _tbName = curTableData.length > 1 ? tableName + JSON.stringify(i + 1) : tableName
           content.push(
             <ListItemButton sx={{ pl: 4 }} key={index + " " + i}>
-              {FormTableCard({ name: tableName, message: name, data: tableData })}
+              {FormTableCard({ name: _tbName, message: name, data: tableData })}
               {/*console.log("各表数据",tableData)*/}
             </ListItemButton>,
           );
@@ -175,24 +179,24 @@ function PatientDetailTablesView() {
     });
   }, [patientBhZyId]);
 
-  useEffect(() => {
-    axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
-    axios({
-      method: "GET",
-      url: "/patient/hxzyinfo",
-      headers: {
-        "x-session-token": localStorage.getItem("token"),
-      },
-      params: {
-        "hxzyid": patientHxZyId,
-      },
-    }).then(response => {
-      console.log(response);
-      const { data } = response.data ? response.data : {};
-      setData(data);
-      parseData(data);
-    });
-  }, [patientHxZyId]);
+  // useEffect(() => {
+  //   axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
+  //   axios({
+  //     method: "GET",
+  //     url: "/patient/hxzyinfo",
+  //     headers: {
+  //       "x-session-token": localStorage.getItem("token"),
+  //     },
+  //     params: {
+  //       "hxzyid": patientHxZyId,
+  //     },
+  //   }).then(response => {
+  //     console.log(response);
+  //     const { data } = response.data ? response.data : {};
+  //     setData(data);
+  //     parseData(data);
+  //   });
+  // }, [patientHxZyId]);
 
   useEffect(() => {
     axios.defaults.baseURL = process.env.REACT_APP_ApiUrl;
@@ -216,54 +220,58 @@ function PatientDetailTablesView() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Formik
-        initialValues={{ patientBhZyId: 1, patientHxZyId: 1 }}
-        validationSchema={Yup.object({
-          patientBhZyId: Yup.number().positive("住院号是正数").integer("请输入数字"),
-          patientHxZyId: Yup.number().positive("住院号是正数").integer("请输入数字"),
-        })
-        }
-        onSubmit={handleSubmit}
-      >
-        <Form>
-          <Grid
-            container
-            columns={{ xs: 12, sm: 12 }}
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            width="50%"
-           
-          >
-            <Grid item xs={4} sm={4} m={3}>
-              <label htmlFor="patientBhZyId">输入病人滨海住院号：</label>
-              <Field id="patientBhZyId" name="patientBhZyId" as={SoftInput} />
-              <SoftButton
-                type="submit"
-                variant="gradient"
-              >Submit</SoftButton>
-            </Grid>
-            <Grid item xs={4} sm={4} m={3}>
+      <SoftBox >
+        <Formik
+          initialValues={{ patientBhZyId: 1 }}
+          validationSchema={Yup.object({
+            patientBhZyId: Yup.number().positive("住院号是正数").integer("请输入数字"),
+          })
+          }
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            <Grid
+              container
+              columns={{ xs: 20, sm: 20 }}
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              width="100%"
+              spacing={2}
+            >
+              <Grid item xs={6} mt={6} ml={0} mb={1} >
+                <SoftBox mb={1} display="inline-block">
+                  <label htmlFor="patientBhZyId">输入病人住院号：</label>
+                  <Field id="patientBhZyId" name="patientBhZyId" as={SoftInput} />
+                </SoftBox>
+                {' '}
+                <SoftButton
+                  type="submit"
+                  variant="gradient"
+                >Submit</SoftButton>
+              </Grid>
+              {/* <Grid item xs={4} sm={4} m={3}>
               <label htmlFor="patientBhZyId">输入病人河西住院号：</label>
               <Field id="patientHxZyId" name="patientHxZyId" as={SoftInput} />
-              {/*<ErrorMessage name="patientBhZyId" />*/}
+              <ErrorMessage name="patientBhZyId" />
               <SoftButton
                 type="submit"
                 variant="gradient"
               >Submit</SoftButton>
-            </Grid>
-            <Grid item xs={4} sm={4} ml={2}>
-              <label >导出病人信息：</label>
-              <SoftButton onClick={handleExportCurrentExcel}
-                type="button"
-                variant="gradient"
-              >导出</SoftButton>
+            </Grid> */}
+              <Grid item xs={4} sm={4} ml={0} mt={8}>
+                <label >导出病人信息：</label>
+                <SoftButton onClick={handleExportCurrentExcel}
+                  type="button"
+                  variant="gradient"
+                >导出</SoftButton>
 
+              </Grid>
             </Grid>
-          </Grid>
-        </Form>
-      </Formik>
-      <SoftBox my={3}>
+          </Form>
+        </Formik>
+      </SoftBox>
+      <SoftBox my={5}>
         {
           CollapseTables(
             "病人详情信息",

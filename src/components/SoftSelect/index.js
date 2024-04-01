@@ -27,14 +27,15 @@ import colors from "assets/theme/base/colors";
 // Custom styles for SoftSelect
 import styles from "components/SoftSelect/styles";
 
-const SoftSelect = forwardRef(({ size, error, success, ...rest }, ref) => {
+const SoftSelect = forwardRef(({ size, error, success,  ...rest }, ref) => {
   const { light } = colors;
-
+  let {isDisabled} = rest
   return (
     <Select
       {...rest}
       ref={ref}
-      styles={styles(size, error, success)}
+      placeholder={"请选择..."}
+      styles={styles(size, error, success, isDisabled)}
       theme={(theme) => ({
         ...theme,
         colors: {

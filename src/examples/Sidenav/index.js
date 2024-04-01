@@ -50,9 +50,9 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentSidenav } = controller;
   const location = useLocation();
-  const { pathname } = location;
+  const { pathname, hash } = location;
   const collapseName = pathname.split("/").slice(1)[0];
-  const itemName = pathname.split("/").slice(1)[1];
+  const itemName = hash ? pathname.split("/").slice(1)[1] + hash : pathname.split("/").slice(1)[1];
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 

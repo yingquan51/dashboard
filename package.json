@@ -55,7 +55,8 @@
     "react-circular-slider-svg": "0.1.5",
     "react-countup": "6.3.0",
     "react-csv": "^2.2.2",
-    "react-dom": ">=16.8.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-flatpickr": "3.10.13",
     "react-flipcard": "^0.2.1",
     "react-images-viewer": "1.7.1",
@@ -88,9 +89,6 @@
       "react-app",
       "react-app/jest"
     ]
-  },
-  "peerDependencies": {
-    "react-dom": ">=16.8.0"
   },
   "browserslist": {
     "production": [

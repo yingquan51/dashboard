@@ -59,7 +59,7 @@ function DefaultLineChart({ title, description, height, chart }) {
         <SoftBox px={description ? 1 : 0} pt={description ? 1 : 0}>
           {title && (
             <SoftBox mb={1}>
-              <SoftTypography variant="h6">{title}</SoftTypography>
+              <SoftTypography variant="h5">{title}</SoftTypography>
             </SoftBox>
           )}
           <SoftBox mb={2}>
